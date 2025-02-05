@@ -24,6 +24,7 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        verse: "hsl(var(--verse))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -71,6 +72,16 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        'quran-kareem': ['var(--font-quran-kareem)'],
+        'uthmanic': ['var(--font-uthmanic)'],
+        'scheherazade': ['var(--font-scheherazade)'],
+        'allah-muhammad': ['var(--font-allah-muhammad)'],
+        'ayat-quran': ['var(--font-ayat-quran)'],
+        'aalmaghribi': ['var(--font-aalmaghribi)'],
+        'khebrat': ['var(--font-khebrat)'],
+        'ramadhan': ['var(--font-ramadhan)'],
       },
     },
   },

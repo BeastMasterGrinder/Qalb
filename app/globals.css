@@ -6,6 +6,7 @@
   :root {
     /* Light Theme - Warm Desert Sands */
     --background: 40 33% 95%;         /* Warm off-white */
+    --background-secondary: 40 33% 95%;
     --foreground: 25 30% 15%;         /* Deep coffee brown */
     --card: 40 30% 98%;              /* Warm paper white */
     --primary: 28 45% 40%;           /* Terracotta orange */
@@ -21,12 +22,13 @@
     --chart-3: 45 60% 50%;           /* Gold */
     --chart-4: 35 30% 60%;           /* Warm taupe */
     --chart-5: 20 30% 50%;           /* Deep umber */
-    --verse-text: 85 20% 35%;         /* Olive green */
+    --verse: 85 20% 35%;         /* Olive green */
   }
 
   .dark {
     /* Dark Theme - Warm Night Sky */
     --background: 240 21% 12%;        /* Deep navy blue */
+    --background-secondary: 240 21% 12%;
     --foreground: 35 30% 85%;         /* Warm parchment */
     --card: 240 15% 18%;             /* Rich blue-gray */
     --primary: 30 30% 60%;           /* Sandy brown */
@@ -42,7 +44,7 @@
     --chart-3: 45 50% 60%;           /* Soft gold */
     --chart-4: 240 15% 40%;          /* Blue-gray */
     --chart-5: 20 25% 55%;           /* Warm gray-brown */
-    --verse-text: 170 25% 65%;        /* Soft teal */
+    --verse: 170 25% 65%;        /* Soft teal */
   }
 }
 
@@ -53,4 +55,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.quran-text {
+  font-family: var(--font-quran-kareem);
+}
+
+.decorative-heading {
+  font-family: var(--font-allah-muhammad);
+}
+
+.arabic-content {
+  font-family: var(--font-scheherazade);
 }

@@ -1,12 +1,8 @@
-import DeployButton from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/header-auth";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import Link from "next/link";
 import "./globals.css";
+import Navbar from "@/components/navbar";
+import { quranKareem, uthmanicScript, scheherazade, allahMuhammad, ayatQuran, aalmaghribi, khebratMusamim, ramadhanKarim } from "@/public/fonts/fonts";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -14,8 +10,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "قلب",
+  description: "قلب",
 };
 
 const geistSans = Geist({
@@ -29,37 +25,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={geistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="min-h-screen flex flex-col items-center">
-            <div className="flex-1 w-full flex flex-col gap-20 items-center">
-              <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-                <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                  <div className="flex gap-5 items-center font-semibold">
-                    <Link href={"/"} className="text-2xl font-bold text-primary">
-                      قلب
-                    </Link>
-                    <div className="flex items-center gap-2">
-                      <DeployButton />
-                    </div>
-                  </div>
-                  {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-                </div>
-                <div className="flex items-center gap-2">
-                  <ThemeSwitcher />
-                </div>
-              </nav>
-              <div className="flex flex-col gap-20 max-w-5xl p-5">
-                {children}
-              </div>
-            </div>
-          </main>
+    <html lang="en" className={
+      `${quranKareem.variable} 
+      ${uthmanicScript.variable}
+      ${scheherazade.variable}
+      ${allahMuhammad.variable}
+      ${ayatQuran.variable}
+      ${aalmaghribi.variable}
+      ${khebratMusamim.variable}
+      ${ramadhanKarim.variable}
+      `}
+      suppressHydrationWarning>
+      <body className={`${geistSans.className} bg-background text-foreground`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="flex h-screen">
+            <Navbar />
+            <main className="flex-1 overflow-auto">
+              <div className="max-w-4xl mx-auto p-4">{children}</div>
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>

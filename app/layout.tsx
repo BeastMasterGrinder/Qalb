@@ -38,12 +38,7 @@ export default function RootLayout({
       suppressHydrationWarning>
       <body className={`${geistSans.className} bg-background text-foreground`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="flex h-screen">
-            <Navbar />
-            <main className="flex-1 overflow-auto">
-              <div className="max-w-4xl mx-auto p-4">{children}</div>
-            </main>
-          </div>
+              <div>{children}</div>
         </ThemeProvider>
       </body>
     </html>

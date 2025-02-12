@@ -1,34 +1,57 @@
-'use client'
-import { useState, useEffect } from "react";
-import { getRandomVerse } from "@/app/actions/getVerse";
+"use client"
+
+import { useEffect, useState } from "react"
+import { getRandomVerse } from "@/app/actions/getVerse"
 
 export default function Verse() {
-    const [verse, setVerse] = useState({
-        text: "",
-        translation: "",
-        key: ""
-    });
+  const [verse, setVerse] = useState<{ text: string; translation: string; key: string } | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
     const fetchVerse = async () => {
-        const verse = await getRandomVerse();
-        setVerse(verse);
+      try {
+        const verseData = await getRandomVerse()
+        if (!verseData) {
+          throw new Error("Failed to fetch verse")
+        }
+        setVerse(verseData)
+        setError(null)
+      } catch (err) {
+        setError("Error loading verse")
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }
-    useEffect(() => {
-        fetchVerse();
-    }, []);
-    return (
-        <div style={{width:'100vw', height:'100vh'}} className={`flex flex-col min-h-screen min-w-screen transition-colors duration-300 `}>
-            <h1 className="lg:text-5xl md:text-3xl font-bold text-center mt-10 mb-5 w-full">Verse Generated</h1>
-            <div className="flex-grow flex flex-col justify-center items-center mt-3 px-4 w-full">
-                <p className="Verse lg:text-5xl md:text-4xl text-center mb-2">
-                    {verse.text}
-                </p>
-                <p className="text-xl text-center my-2" >
-                    {verse.translation}
-                </p>
-                <p className="text-md text-center">
-                    ({verse.key})
-                </p>
-            </div>
-        </div>
-    );
+
+    // Initial fetch
+    fetchVerse()
+
+    // Set up interval to fetch new verse every 20 seconds
+    const intervalId = setInterval(fetchVerse, 20000)
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId)
+  }, [])
+
+  if (loading) {
+    return <div className="animate-pulse">Loading verse...</div>
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>
+  }
+
+  if (!verse) {
+    return null
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="text-2xl font-quran-kareem text-right">{verse.text}</div>
+      <div className="text-lg">{verse.translation}</div>
+      <div className="text-sm text-gray-500">{verse.key}</div>
+    </div>
+  )
 }

@@ -28,8 +28,8 @@ export default function Verse() {
     // Initial fetch
     fetchVerse()
 
-    // Set up interval to fetch new verse every 20 seconds
-    const intervalId = setInterval(fetchVerse, 20000)
+    // Set up interval to fetch new verse every 2 minutes
+    const intervalId = setInterval(fetchVerse, 120000)
 
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId)
@@ -48,10 +48,10 @@ export default function Verse() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="text-2xl font-quran-kareem text-right">{verse.text}</div>
-      <div className="text-lg">{verse.translation}</div>
-      <div className="text-sm text-gray-500">{verse.key}</div>
+    <div className="contianer space-y-4">
+      <div className="sm:text-lg lg:text-4xl font-quran-kareem text-center text-verse">{verse.text}</div>
+      <div className="sm:text-sm lg:text-xl">{verse.translation}</div>
+      <div className="text-md text-gray-300">{verse.key}</div>
     </div>
   )
 }

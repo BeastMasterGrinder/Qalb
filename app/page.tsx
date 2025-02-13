@@ -10,13 +10,13 @@ export default function Home() {
     <div className="flex-1 flex flex-col gap-6 px-4">
       <Navbar />
       {/** Verse Randomizer */}
-      <div className="justify-center items-center text-center">
+      <div className="justify-center items-center text-center pt-[10rem] px-[12rem] ">
         <Suspense fallback={<div>Loading...</div>}>
-          {/* <Verse /> */}
+          <Verse />
         </Suspense>
       </div>
       {/* Chat text box */}
-      <div>
+      <div className="justify-center items-center px-[14rem]">
         <Chat />
       </div>
     </div>

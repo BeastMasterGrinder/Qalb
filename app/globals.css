@@ -68,3 +68,7 @@
 .arabic-content {
   font-family: var(--font-scheherazade);
 }
+
+textarea {
+  resize: none;
+}

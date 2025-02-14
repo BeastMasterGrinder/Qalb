@@ -5,7 +5,13 @@ import axios from "axios";
 
 export async function getSentiments(prompt:string){
     try{
-        const response = await axios.get(`https://qalb-microservice.onrender.com/qalb/${prompt}`);
+        // Get the api key and pass it to the header:
+        const apiKey = process.env.SENTIMENT_API_KEY;
+        const headers = {
+            "x-api-key": apiKey
+        }
+
+        const response = await axios.get(`https://qalb-microservice.onrender.com/qalb/${prompt}`, {headers});
         const jsonSentiments = response?.data;
 
         //@TODO: Remove this console.log

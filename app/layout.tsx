@@ -38,7 +38,8 @@ export default function RootLayout({
       suppressHydrationWarning>
       <body className={`${geistSans.className} bg-background text-foreground`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-              <div>{children}</div>
+          <Navbar />
+          <div>{children}</div>
         </ThemeProvider>
       </body>
     </html>

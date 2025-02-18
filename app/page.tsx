@@ -8,7 +8,6 @@ import Chat from "@/components/chat";
 export default function Home() {
   return (
     <div className="flex-1 flex flex-col gap-6 px-4">
-      <Navbar />
       {/** Verse Randomizer */}
       <div className="justify-center items-center text-center pt-[10rem] px-[12rem] ">
         <Suspense fallback={<div>Loading...</div>}>

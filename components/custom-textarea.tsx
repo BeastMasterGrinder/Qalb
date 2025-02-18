@@ -70,7 +70,7 @@ export function CustomExpandingTextarea({
     };
 
     return (
-        <div className="relative w-full h-screen">
+        <div className="relative w-full">
             <div
                 className={cn(
                     "fixed inset-0 bg-background/60 backdrop-blur-sm transition-all duration-700",

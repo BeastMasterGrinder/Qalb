@@ -36,10 +36,12 @@ export default function RootLayout({
       ${ramadhanKarim.variable}
       `}
       suppressHydrationWarning>
-      <body className={`${geistSans.className} bg-background text-foreground`}>
+      <body className={`${geistSans.className} bg-background text-foreground h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
-          <div>{children}</div>
+          <main className="flex-1 flex flex-col overflow-hidden">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

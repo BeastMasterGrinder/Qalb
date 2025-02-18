@@ -1,7 +1,28 @@
-export default function Journals() {
-    return (
-        <div>
-            <h1>Journals</h1>
-        </div>
-    )
+import { Suspense } from "react"
+import { SearchInput } from "@/components/journal/search-input"
+import { TagFilter } from "@/components/journal/tag-filter"
+import { JournalResults } from "@/components/journal/journal-results"
+
+interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined }
 }
+
+export default async function JournalPage({ searchParams }: PageProps) {
+  return (
+    <div className="container mx-auto p-4">
+      <div className="flex flex-col gap-6">
+        {/* Search and Filter Section */}
+        <div className="flex flex-col gap-4 justify-center items-center">
+          <SearchInput />
+          <TagFilter/>
+        </div>
+
+        {/* Journal Results */}
+        <Suspense fallback={<div>Loading journals...</div>}>
+          <JournalResults searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </div>
+  )
+}
+

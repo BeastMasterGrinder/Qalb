@@ -6,7 +6,7 @@ import axios from "axios";
 export async function getSentiments(prompt:string){
     try{
         // Get the api key and pass it to the header:
-        const apiKey = process.env.SENTIMENT_API_KEY;
+        const apiKey = process.env.NEXT_ML_SERVICE_API_KEY;
         const headers = {
             "x-api-key": apiKey
         }

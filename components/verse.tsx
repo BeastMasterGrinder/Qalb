@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { getRandomVerse } from "@/app/actions/getVerse"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function Verse() {
   const [verse, setVerse] = useState<{ text: string; translation: string; key: string } | null>(null)
@@ -36,11 +37,29 @@ export default function Verse() {
   }, [])
 
   if (loading) {
-    return <div className="animate-pulse">Loading verse...</div>
+    return (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        exit={{ opacity: 0 }}
+        className="animate-pulse"
+      >
+        Loading verse...
+      </motion.div>
+    )
   }
 
   if (error) {
-    return <div className="text-red-500">{error}</div>
+    return (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="text-red-500"
+      >
+        {error}
+      </motion.div>
+    )
   }
 
   if (!verse) {
@@ -48,10 +67,62 @@ export default function Verse() {
   }
 
   return (
-    <div className="contianer space-y-4">
-      <div className="sm:text-lg lg:text-4xl font-quran-kareem text-center text-verse">{verse.text}</div>
-      <div className="sm:text-sm lg:text-xl">{verse.translation}</div>
-      <div className="text-md text-gray-300">{verse.key}</div>
+    <div className="container space-y-8">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={verse.key} // Important for triggering re-render on verse change
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{
+            duration: 0.5,
+            ease: "easeInOut"
+          }}
+          className="space-y-8"
+        >
+          <motion.div 
+            className="sm:text-lg lg:text-4xl quran-text text-center text-verse leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.1,
+              ease: "easeOut"
+            }}
+          >
+            {verse.text}
+          </motion.div>
+          
+          <motion.div 
+            className="sm:text-sm lg:text-xl leading-loose"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.2,
+              ease: "easeOut"
+            }}
+          >
+            {verse.translation}
+          </motion.div>
+          
+          <motion.div 
+            className="text-md text-gray-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.4,
+              delay: 0.3,
+              ease: "easeOut"
+            }}
+          >
+            {verse.key}
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getRandomVerse } from "@/app/actions/getVerse"
+import { getRandomVerse } from "@/lib/actions/getVerse"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function Verse() {

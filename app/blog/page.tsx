@@ -1,9 +1,5 @@
-import { NextPage } from 'next';
-
-const BlogPage: NextPage = () => {
+export default function BlogPage() {
   return (
     <div>BlogPage</div>
   );
-};
-
-export default BlogPage;
+}

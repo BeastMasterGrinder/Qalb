@@ -5,10 +5,12 @@ import { useState, type KeyboardEvent, useEffect, useRef } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { getSentiments } from "@/app/actions/getSentiments"
+import { getSentiments } from "@/lib/actions/getSentiments"
 import { ArrowUp } from "lucide-react"
 import { format } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
+import { getBrowser } from "@/lib/browser/getbrowser";
+import { redirect } from "next/navigation"
 
 interface CustomExpandingTextareaProps {
   placeholder?: string
@@ -48,18 +50,33 @@ export function CustomExpandingTextarea({
     try {
       console.log("sending message")
       // Replace with your API endpoint
-      const response = await getSentiments(message)
+      const sentimentsResponse = await getSentiments(message)
 
-      console.log(response)
-      if (!response) {
+      console.log(sentimentsResponse)
+      if (!sentimentsResponse) {
         throw new Error("Failed to send message")
       }
-      // Save the json to local storage
-      localStorage.setItem("sentiments", JSON.stringify(response))
+      // Create a journal to journals route
+      const response = await fetch("/api/journals", {
+        method: "POST",
+        body: JSON.stringify({
+          sentiments: sentimentsResponse,
+          content: message,
+          browserInfo: getBrowser()
+        })
+      })
+      
+      if (!response.ok) {
+        throw new Error("Failed to create journal")
+      }
 
+      console.log("Journal created successfully")
       // Clear the input after successful submission
       setMessage("")
       setIsExpanded(false)
+
+      const data = await response.json()
+      redirect("/journals/" + data.id);
     } catch (error) {
       console.error("Error sending message:", error)
     }

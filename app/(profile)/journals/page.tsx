@@ -4,7 +4,7 @@ import { TagFilter } from "@/components/journal/tag-filter"
 import { JournalResults } from "@/components/journal/journal-results"
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export default async function JournalPage({ searchParams }: PageProps) {
@@ -19,7 +19,7 @@ export default async function JournalPage({ searchParams }: PageProps) {
 
         {/* Journal Results */}
         <Suspense fallback={<div>Loading journals...</div>}>
-          <JournalResults searchParams={searchParams} />
+          <JournalResults searchParams={await searchParams} />
         </Suspense>
       </div>
     </div>

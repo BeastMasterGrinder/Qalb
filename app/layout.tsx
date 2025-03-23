@@ -36,6 +36,7 @@ export default function RootLayout({
       ${ramadhanKarim.variable}
       `}
       suppressHydrationWarning>
+      <script src="https://accounts.google.com/gsi/client" async></script>
       <body className={`${geistSans.className} bg-background text-foreground h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />

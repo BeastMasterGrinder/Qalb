@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 import { Lato } from "next/font/google";
+import UserAvatar from "@/components/navbar/Avatar";
 
 const lato = Lato({
     weight: ["400", "700"],
@@ -28,8 +29,7 @@ export default function Navbar() {
                     </Link>
                     <div className="flex items-center gap-2">
                         <ThemeSwitcher />
-                        {/* User icon placeholder - you can add your user icon component here */}
-                        <div className="w-8 h-8 rounded-full bg-foreground/10"></div>
+                        <UserAvatar />
                     </div>
                 </div>
             </div>

@@ -1,7 +1,4 @@
-import Hero from "@/components/hero";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Verse from "@/components/verse";
-import Navbar from "@/components/navbar";
 import { Suspense } from "react";
 import Chat from "@/components/chat";
 import BackgroundPaths from "@/components/kokonutui/background-paths";

@@ -80,7 +80,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                     }}
                     className="grid gap-2"
                 >
-                    <Label htmlFor="confirm-password"> Password</Label>
+                    <Label htmlFor="confirm-password">Password</Label>
                     <Input id="password" type="password" placeholder="••••••••" required />
                 </motion.div>
                 <motion.div 

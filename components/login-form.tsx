@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-import { GalleryVerticalEnd } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 import { cn } from "@/lib/utils"

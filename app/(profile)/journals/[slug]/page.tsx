@@ -15,28 +15,24 @@
 
 import { useState } from 'react';
 import { JournalModal } from '@/components/journal/journal-modal';
-import styles from './styles.module.css';
+import JournalText from '@/components/journal/journal-text';
 
 const dummyData = [
     {
         sentence: "I went to school today",
         sentiment: "joy",
-        createdAt: "2024-01-01"
     },
     {
         sentence: "I had a bad day",
         sentiment: "sadness",
-        createdAt: "2024-01-02"
     },
     {
         sentence: "I'm feeling happy today",
         sentiment: "anger",
-        createdAt: "2024-01-03"
     },
     {
         sentence: "I was scared of the dark",
         sentiment: "fear",
-        createdAt: "2024-01-04"
     },    
 ]
 
@@ -60,17 +56,7 @@ export default function JournalPage() {
         <>
             <div className="flex flex-col gap-4 items-center justify-center">
                 <h1>Journal</h1>
-                <div className="p-2 rounded">
-                    {dummyData.map((item, index) => (
-                        <div 
-                            key={index}
-                            onClick={() => setSelectedEntry(item)}
-                            className={`relative cursor-pointer ${styles[item.sentiment as keyof typeof styles]}`}
-                        >
-                            {item.sentence}.&nbsp;
-                        </div>
-                    ))}
-                </div>
+                <JournalText dummyData={dummyData} selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} />
             </div>
             <JournalModal 
                 isOpen={!!selectedEntry}

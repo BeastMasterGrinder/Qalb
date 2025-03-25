@@ -16,6 +16,7 @@
 import { useState } from 'react';
 import { JournalModal } from '@/components/journal/journal-modal';
 import JournalText from '@/components/journal/journal-text';
+import { motion } from 'framer-motion';
 
 const dummyData = [
     {
@@ -50,10 +51,16 @@ export default function JournalPage() {
         }
     };
 
-    
-
     return (
-        <>
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ 
+                duration: 0.8,
+                ease: "easeInOut"
+            }}
+        >
             <div className="flex flex-col gap-4 items-center justify-center">
                 <h1>Journal</h1>
                 <JournalText dummyData={dummyData} selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} />
@@ -69,6 +76,6 @@ export default function JournalPage() {
                 isFirst={selectedEntry === dummyData[0]}
                 isLast={selectedEntry === dummyData[dummyData.length - 1]}
             />
-        </>
+        </motion.div>
     )
 }

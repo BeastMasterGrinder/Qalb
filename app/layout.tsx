@@ -2,6 +2,7 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import { AnimatePresence } from "framer-motion";
 import { quranKareem, uthmanicScript, scheherazade, allahMuhammad, ayatQuran, aalmaghribi, khebratMusamim, ramadhanKarim } from "@/public/fonts/fonts";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -41,7 +42,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="flex-1 flex flex-col overflow-hidden">
-            {children}
+            <AnimatePresence mode="wait">
+              {children}
+            </AnimatePresence>
           </main>
         </ThemeProvider>
       </body>

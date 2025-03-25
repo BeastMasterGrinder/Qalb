@@ -1,23 +1,32 @@
 import * as motion from "motion/react-client"
 import styles from './styles.module.css';
+import { Suspense } from 'react';
 
-export default function JournalText( 
-    {dummyData, selectedEntry, setSelectedEntry}: {
-        dummyData: Array<{
-            sentiment: string;
-            sentence: string;
-        }>,
-        selectedEntry: {
-            sentiment: string;
-            sentence: string;
-        } | null,
-        setSelectedEntry: (entry: {
-            sentiment: string;
-            sentence: string;
-        } | null) => void
-    }) {
+const JournalTextContent = ({
+    dummyData,
+    selectedEntry,
+    setSelectedEntry
+}: {
+    dummyData: Array<{
+        sentiment: string;
+        sentence: string;
+    }>,
+    selectedEntry: {
+        sentiment: string;
+        sentence: string;
+    } | null,
+    setSelectedEntry: (entry: {
+        sentiment: string;
+        sentence: string;
+    } | null) => void
+}) => {
     return (
-        <motion.div className="p-2">
+        <motion.div 
+            className="p-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
             {dummyData.map((item, index) => (
                 <span 
                     key={index}
@@ -28,5 +37,26 @@ export default function JournalText(
                 </span>
             ))}
         </motion.div>
-    )
+    );
+};
+
+export default function JournalText(props: {
+    dummyData: Array<{
+        sentiment: string;
+        sentence: string;
+    }>,
+    selectedEntry: {
+        sentiment: string;
+        sentence: string;
+    } | null,
+    setSelectedEntry: (entry: {
+        sentiment: string;
+        sentence: string;
+    } | null) => void
+}) {
+    return (
+        <Suspense fallback={<div className="p-2">Loading...</div>}>
+            <JournalTextContent {...props} />
+        </Suspense>
+    );
 }

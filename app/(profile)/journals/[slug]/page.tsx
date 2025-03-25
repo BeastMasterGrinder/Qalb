@@ -15,6 +15,7 @@
 
 import { useState } from 'react';
 import { JournalModal } from '@/components/journal/journal-modal';
+import styles from './styles.module.css';
 
 const dummyData = [
     {
@@ -53,12 +54,7 @@ export default function JournalPage() {
         }
     };
 
-    const sentimentColors = {
-        joy: "hover:bg-amber-200 dark:hover:bg-amber-700 underline decoration-2 decoration-amber-200 dark:decoration-amber-700 selection:bg-amber-200 dark:selection:bg-amber-700",
-        sadness: "hover:bg-slate-300 dark:hover:bg-slate-700 underline decoration-2 decoration-slate-300 dark:decoration-slate-700 selection:bg-slate-300 dark:selection:bg-slate-700",
-        fear: "hover:bg-emerald-100 dark:hover:bg-emerald-900 underline decoration-2 decoration-emerald-100 dark:decoration-emerald-900 selection:bg-emerald-100 dark:selection:bg-emerald-900",
-        anger: "hover:bg-rose-200 dark:hover:bg-rose-900 underline decoration-2 decoration-rose-200 dark:decoration-rose-900 selection:bg-rose-200 dark:selection:bg-rose-900"
-    }
+    
 
     return (
         <>
@@ -69,7 +65,7 @@ export default function JournalPage() {
                         <div 
                             key={index}
                             onClick={() => setSelectedEntry(item)}
-                            className={`relative cursor-pointer transition-colors duration-200 ease-in-out ${sentimentColors[item.sentiment as keyof typeof sentimentColors]}`}
+                            className={`relative cursor-pointer ${styles[item.sentiment as keyof typeof styles]}`}
                         >
                             {item.sentence}.&nbsp;
                         </div>

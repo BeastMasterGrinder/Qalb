@@ -11,12 +11,8 @@
  * 
  */
 
-'use client';
-
-import { useState } from 'react';
-import { JournalModal } from '@/components/journal/journal-modal';
-import JournalText from '@/components/journal/journal-text';
-import { motion } from 'framer-motion';
+import { getJournal } from '@/lib/actions/journal';
+import JournalClientContainer from '@/components/journal/journal-client-container';
 
 const dummyData = [
     {
@@ -37,45 +33,23 @@ const dummyData = [
     },    
 ]
 
-export default function JournalPage() {
-    const [selectedEntry, setSelectedEntry] = useState<typeof dummyData[0] | null>(null);
-    const [direction, setDirection] = useState<1 | -1>(1);
-    
-    const handleSlide = (newDirection: 1 | -1) => {
-        const currentIndex = dummyData.findIndex(entry => entry === selectedEntry);
-        const nextIndex = currentIndex + newDirection;
-        
-        if (nextIndex >= 0 && nextIndex < dummyData.length) {
-            setSelectedEntry(dummyData[nextIndex]);
-            setDirection(newDirection);
+export default async function JournalPage(
+    {
+        params,
+    }: {
+        params: {
+            slug: string;
         }
-    };
-
+    }
+) {
+    const { slug } = await params;
+    const journalData = await getJournal(slug);
+    console.log("journalData", journalData);
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ 
-                duration: 0.8,
-                ease: "easeInOut"
-            }}
-        >
-            <div className="flex flex-col gap-4 items-center justify-center">
-                <h1>Journal</h1>
-                <JournalText dummyData={dummyData} selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} />
-            </div>
-            <JournalModal 
-                isOpen={!!selectedEntry}
-                onClose={() => setSelectedEntry(null)}
-                sentence={selectedEntry?.sentence || ''}
-                sentiment={selectedEntry?.sentiment || ''}
-                onNext={() => handleSlide(1)}
-                onPrevious={() => handleSlide(-1)}
-                direction={direction}
-                isFirst={selectedEntry === dummyData[0]}
-                isLast={selectedEntry === dummyData[dummyData.length - 1]}
-            />
-        </motion.div>
+        <JournalClientContainer 
+            dummyData={dummyData} 
+            slug={slug} 
+            journalData={journalData}
+        />
     )
 }

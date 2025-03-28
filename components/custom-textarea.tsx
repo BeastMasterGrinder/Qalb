@@ -10,7 +10,7 @@ import { ArrowUp } from "lucide-react"
 import { format } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
 import { getBrowser } from "@/lib/browser/getbrowser";
-import { redirect } from "next/navigation"
+import { useRouter } from 'next/navigation'
 
 interface CustomExpandingTextareaProps {
   placeholder?: string
@@ -25,6 +25,9 @@ export function CustomExpandingTextarea({
   const [message, setMessage] = useState("")
   const [currentTime, setCurrentTime] = useState(new Date())
   const containerRef = useRef<HTMLDivElement>(null)
+
+
+  const router = useRouter();
 
   // Update time every second when expanded
   useEffect(() => {
@@ -49,10 +52,9 @@ export function CustomExpandingTextarea({
   const handleSubmit = async () => {
     try {
       console.log("sending message")
-      // Replace with your API endpoint
       const sentimentsResponse = await getSentiments(message)
 
-      console.log(sentimentsResponse)
+      console.log("sentimentsResponse", sentimentsResponse)
       if (!sentimentsResponse) {
         throw new Error("Failed to send message")
       }
@@ -75,8 +77,9 @@ export function CustomExpandingTextarea({
       setMessage("")
       setIsExpanded(false)
 
-      const data = await response.json()
-      redirect("/journals/" + data.id);
+      const data = await response.json();
+      console.log("data", data);
+      router.push("/journals/" + data.id);
     } catch (error) {
       console.error("Error sending message:", error)
     }

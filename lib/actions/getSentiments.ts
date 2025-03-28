@@ -12,6 +12,11 @@ export async function getSentiments(prompt:string){
         }
 
         const response = await axios.get(`https://qalb-microservice.onrender.com/qalb/${prompt}`, {headers});
+
+        if (response.status !== 200) {
+            throw new Error("Failed to get sentiments. Response status: " + response.status);
+        }
+
         const jsonSentiments = response?.data;
 
         //@TODO: Remove this console.log

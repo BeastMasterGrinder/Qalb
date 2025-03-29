@@ -9,9 +9,9 @@
     --background-secondary: 40 33% 95%;
     --foreground: 25 30% 15%;         /* Deep coffee brown */
     --card: 40 30% 98%;              /* Warm paper white */
-    --primary: 28 45% 40%;           /* Terracotta orange */
+    --secondary: 48 45% 40%;           /* Terracotta orange */
     --primary-foreground: 40 33% 95%;
-    --secondary: 85 20% 35%;         /* Olive green */
+    --primary: 85 20% 35%;         /* Olive green */
     --secondary-foreground: 40 33% 95%;
     --accent: 45 60% 50%;            /* Golden yellow */
     --muted: 40 15% 70%;             /* Warm gray */
@@ -33,7 +33,7 @@
     --card: 240 15% 18%;             /* Rich blue-gray */
     --primary: 30 30% 60%;           /* Sandy brown */
     --primary-foreground: 240 21% 12%;
-    --secondary: 85 20% 45%;         /* Sage green */
+    --secondary: 85 20% 20%;         /* Sage green */
     --secondary-foreground: 35 30% 85%;
     --accent: 45 50% 60%;            /* Soft gold */
     --muted: 240 10% 30%;            /* Deep blue-gray */

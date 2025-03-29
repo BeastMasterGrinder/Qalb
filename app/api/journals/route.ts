@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import { checkUser } from "@/lib/actions/user";
 import { generateUUID } from "@/lib/uuid";
 import { revalidatePath } from "next/cache";
@@ -27,12 +27,17 @@ export async function POST(request: Request): Promise<NextResponse> {
   try {
     const { sentiments, content, browserInfo } = await request.json() as JournalRequest;
     const supabase = await createClient();
-    const { data: session } = await supabase.auth.getSession();
+    const { data: user, error: userError } = await supabase.auth.getUser();
+    console.log("Auth check - userError:", userError);
+    console.log("Auth check - user object:", user?.user ? { id: user.user.id, email: user.user.email } : 'null');
+    
     const userId = await checkUser();
+    console.log("checkUser() result:", userId);
 
     // Handle unauthenticated user - store in SQLite
-    if (!userId || !session) {
+    if (!userId || !user) {
       try {
+        console.log("userId", userId);
         const db = await createSqliteConnection();
         await insertLocalJournal(db, [
           uuid,
@@ -57,16 +62,23 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // Handle authenticated user - store in Supabase
     try {
+
       const { error: supabaseError } = await supabase
-        .from("journals")
+        .from("Journals")
         .insert({
           id: uuid,
-          userId,
-          sentiments: typeof sentiments === 'string' ? JSON.parse(sentiments) : sentiments,
+          user_id: userId,
+          sentiments: JSON.stringify(sentiments),
           content
         });
 
       if (supabaseError) {
+        console.error("Supabase insert error details:", {
+          code: supabaseError.code,
+          message: supabaseError.message,
+          details: supabaseError.details,
+          hint: supabaseError.hint
+        });
         throw new Error(supabaseError.message);
       }
 
@@ -96,35 +108,35 @@ export async function POST(request: Request): Promise<NextResponse> {
  * @param {Request} request - The request object containing journal ID
  * @returns {Promise<NextResponse>} - JSON response with status
  */
-export async function DELETE(request: Request) {
-  try {
-    const { id } = await request.json() as { id: string };
+// export async function DELETE(request: Request) {
+//   try {
+//     const { id } = await request.json() as { id: string };
     
-    if (!id) {
-      return NextResponse.json({
-        error: "Journal ID is required"
-      }, { status: 400 });
-    }
+//     if (!id) {
+//       return NextResponse.json({
+//         error: "Journal ID is required"
+//       }, { status: 400 });
+//     }
 
-    const supabase = await createClient();
-    const { error } = await supabase
-      .from("journals")
-      .delete()
-      .eq("id", id);
+//     const supabase = await createClient();
+//     const { error } = await supabase
+//       .from("journals")
+//       .delete()
+//       .eq("id", id);
 
-    if (error) {
-      throw new Error(error.message);
-    }
+//     if (error) {
+//       throw new Error(error.message);
+//     }
 
-    return NextResponse.json({
-      success: true,
-      message: "Journal deleted successfully"
-    }, { status: 200 });
-  } catch (error) {
-    console.error('Delete operation error:', error);
-    return NextResponse.json({
-      error: "Failed to delete journal"
-    }, { status: 500 });
-  }
-}
+//     return NextResponse.json({
+//       success: true,
+//       message: "Journal deleted successfully"
+//     }, { status: 200 });
+//   } catch (error) {
+//     console.error('Delete operation error:', error);
+//     return NextResponse.json({
+//       error: "Failed to delete journal"
+//     }, { status: 500 });
+//   }
+// }
 

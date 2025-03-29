@@ -20,17 +20,12 @@ export default function JournalClientContainer({
     const [selectedEntry, setSelectedEntry] = useState<typeof dummyData[0] | null>(null);
     const [direction, setDirection] = useState<1 | -1>(1);
 
-    // Determine which data to use - journal or dummy data
-    console.log("journalData", journalData);
-    
     // Use real data if available, otherwise fallback to dummy data
     const data = Array.isArray(journalData) && journalData.length > 0 
         ? journalData 
         : (journalData && journalData.error 
             ? dummyData 
             : dummyData);
-    
-    console.log("data to display", data);
     
     const handleSlide = (newDirection: 1 | -1) => {
         const currentIndex = data.findIndex((entry: any) => entry === selectedEntry);

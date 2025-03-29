@@ -1,9 +1,10 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import { cache } from "react";
 import sqlite3 from "sqlite3";
 import path from "path";
+import { formatJournalSentiments } from "@/lib/utils";
 // import { getBrowser } from "@/lib/browser/getbrowser";
 const dbPath = path.join(process.cwd(), 'quran-verses.db');
 
@@ -64,10 +65,10 @@ export const getJournal = cache(async (id: string) => {
         console.log("id", id);
         const supabase = await createClient();
         //check if the user is authenticated
-        const { data: session } = await supabase.auth.getSession();
-        console.log("session", session);
+        const { data: user } = await supabase.auth.getUser();
+        console.log("user", user);
         
-        if (!session || session.session === null) {
+        if (!user || user.user === null) {
             // Query local sqlite db using a Promise
             return new Promise<JournalSentimentEntry[] | { error: string }>((resolve, reject) => {
                 const db = new sqlite3.Database(dbPath, (err) => {
@@ -86,59 +87,9 @@ export const getJournal = cache(async (id: string) => {
                         console.log('Journal:', row);
                         if (row && row.sentiments) {
                             try {
-                                // Parse the sentiments JSON and transform into the format expected by the client
-                                const sentiments: Sentiments = JSON.parse(row.sentiments);
-                                const result: JournalSentimentEntry[] = [];
-                                
-                                // Process joy sentiments
-                                if (sentiments.joy && Array.isArray(sentiments.joy)) {
-                                    sentiments.joy.forEach((item: SentimentItem) => {
-                                        if (item.en_verse_text) {
-                                            result.push({
-                                                sentence: item.en_verse_text,
-                                                sentiment: "joy"
-                                            });
-                                        }
-                                    });
-                                }
-                                
-                                // Process anger sentiments
-                                if (sentiments.anger && Array.isArray(sentiments.anger)) {
-                                    sentiments.anger.forEach((item: SentimentItem) => {
-                                        if (item.en_verse_text) {
-                                            result.push({
-                                                sentence: item.en_verse_text,
-                                                sentiment: "anger"
-                                            });
-                                        }
-                                    });
-                                }
-                                
-                                // Process sadness sentiments
-                                if (sentiments.sadness && Array.isArray(sentiments.sadness)) {
-                                    sentiments.sadness.forEach((item: SentimentItem) => {
-                                        if (item.en_verse_text) {
-                                            result.push({
-                                                sentence: item.en_verse_text,
-                                                sentiment: "sadness"
-                                            });
-                                        }
-                                    });
-                                }
-                                
-                                // Process fear sentiments
-                                if (sentiments.fear && Array.isArray(sentiments.fear)) {
-                                    sentiments.fear.forEach((item: SentimentItem) => {
-                                        if (item.en_verse_text) {
-                                            result.push({
-                                                sentence: item.en_verse_text,
-                                                sentiment: "fear"
-                                            });
-                                        }
-                                    });
-                                }
-                                
-                                resolve(result);
+                                // Use the utility function to format the journal data
+                                const formattedData = formatJournalSentiments([row]);
+                                resolve(formattedData);
                             } catch (e) {
                                 console.error("Error parsing sentiments:", e);
                                 resolve({ error: "Failed to parse journal sentiments" });
@@ -151,12 +102,19 @@ export const getJournal = cache(async (id: string) => {
                 });
             });
         } else {
-            const { data, error } = await supabase.from("journals").select("*").eq("id", id);
+            console.log("user", user.user.id);
+            const { data, error } = await supabase
+                .from("Journals")
+                .select("*")
+                .eq("id", id)
+                .eq("user_id", user.user.id);
             if (error) {
                 console.error(error);
                 return { error: "Failed to get journal from Supabase" };
             }
-            return data;
+            
+            // Use the utility function to format the journal data
+            return formatJournalSentiments(data);
         }
     } catch (error) {
         console.error(error);

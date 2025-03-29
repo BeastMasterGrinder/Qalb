@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import SubmitLoadingButton from "./submit-loading-button"
 
 // Step 2: Password Input Component
 export default function PasswordStep({
@@ -29,12 +30,11 @@ export default function PasswordStep({
   
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" placeholder="••••••••" required />
+            <Input id="password" name="password" type="password" placeholder="••••••••" required />
+            <Input type="hidden" name="email" value={email} />
           </div>
         </div>
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
+        <SubmitLoadingButton loadingText="Signing in...">Login</SubmitLoadingButton>
       </motion.div>
     )
   }

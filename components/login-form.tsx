@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { signInAction } from "@/lib/actions/auth"
 
 import { cn } from "@/lib/utils"
 
@@ -22,15 +23,12 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     e.preventDefault()
     if (step === "email") {
       setStep("password")
-    } else {
-      // Handle login submission
-      console.log("Login submitted")
     }
   }
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit}>
+      <form action={signInAction} onSubmit={step === "email" ? handleSubmit : undefined}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <motion.h1 key={step} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={step === "email" ? "text-3xl font-quran-kareem text-verse" : "text-3xl font-bold"}>

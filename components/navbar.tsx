@@ -10,25 +10,27 @@ const lato = Lato({
 
 export default function Navbar() {
     return (
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-            <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
+        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-20">
+            <div className="w-full flex justify-between items-center p-8 text-sm">
                 {/* Left side */}
                 <div className="flex items-center">
-                    <Link href={"/"} className="text-3xl font-bold text-verse font-quran-kareem">
+                    <Link href={"/"} className="text-5xl font-bold text-verse font-quran-kareem">
                         قلب
                     </Link>
                 </div>
 
                 {/* Right side */}
-                <div className={`flex items-center gap-5`}>
-                    <Link href={"/donate"} className={`${lato.className}`}>
+                <div className={`flex items-center gap-10`}>
+                    <Link href={"/donate"} className={`${lato.className} text-lg`}>
                         Donate
                     </Link>
-                    <Link href={"/blog"} className={`${lato.className}`}>
+                    <Link href={"/blog"} className={`${lato.className} text-lg`}>
                         Blogs
                     </Link>
+                    <Link href={"/about"} className={`${lato.className} text-lg`}>
+                        About Me
+                    </Link>
                     <div className="flex items-center gap-2">
-                        <ThemeSwitcher />
                         <UserAvatar />
                     </div>
                 </div>

@@ -38,7 +38,7 @@ export default function RootLayout({
       `}
       suppressHydrationWarning>
       <script src="https://accounts.google.com/gsi/client" async></script>
-      <body className={`${geistSans.className} bg-background text-foreground h-screen flex flex-col`}>
+      <body className={`${geistSans.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="flex-1 flex flex-col overflow-hidden">

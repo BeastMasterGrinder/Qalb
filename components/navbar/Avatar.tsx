@@ -1,17 +1,27 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User } from "lucide-react"
-import UserOptions from "./user-options"
 import { AvatarButton } from "./avatar-button"
+import LogInButton from "./log-in-button"
+import { createClient } from "@/utils/supabase/client"
 
-export default function UserAvatar() {
+export default async function UserAvatar() {
+    const supabase = createClient();
+    const { data: user } = await supabase.auth.getUser();
+
+    console.log("user", user);
+
     return (
         <div className="relative">
-            <AvatarButton>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>
+            {user.user ? (
+                <AvatarButton>
+                    <AvatarImage src="/images/pfp.png" />
+                    <AvatarFallback>
                     <User />
-                </AvatarFallback>
-            </AvatarButton>
+                    </AvatarFallback>
+                </AvatarButton>
+            ) : (
+                <LogInButton />
+            )}
         </div>
     )
 }

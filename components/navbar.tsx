@@ -31,6 +31,7 @@ export default function Navbar() {
                         About Me
                     </Link>
                     <div className="flex items-center gap-2">
+                        <ThemeSwitcher />
                         <UserAvatar />
                     </div>
                 </div>

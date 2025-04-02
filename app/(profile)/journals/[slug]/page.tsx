@@ -13,6 +13,9 @@
 
 import { getJournal } from '@/lib/actions/journal';
 import JournalClientContainer from '@/components/journal/journal-client-container';
+import { getRandomVersesBySentiment } from '@/lib/actions/SentimentVerses';
+import SentimentVerses  from '@/components/journal/sentiments/Sentiment-Verses'
+
 
 const dummyData = [
     {
@@ -33,6 +36,8 @@ const dummyData = [
     },    
 ]
 
+const sizing = "flex flex-col items-center justify-center py-5 md:py-16 px-5 md:px-[20rem]  h-full ";
+
 export default async function JournalPage(
     {
         params,
@@ -46,10 +51,18 @@ export default async function JournalPage(
     const journalData = await getJournal(slug);
     console.log("journalData", journalData);
     return (
-        <JournalClientContainer 
-            dummyData={dummyData} 
-            slug={slug} 
-            journalData={journalData}
-        />
+        <div className='border-2 border-red-500'>
+            {/* Journal */}
+            <JournalClientContainer 
+                dummyData={dummyData} 
+                slug={slug} 
+                journalData={journalData}
+                className={sizing}
+            />
+            {/* Sentiment Quran Verses*/}
+            <SentimentVerses 
+                sentiment={journalData}
+            />
+        </div>
     )
 }

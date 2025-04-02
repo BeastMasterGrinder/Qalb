@@ -24,7 +24,7 @@ export default function JournalText({
 }) {
     return (
         <motion.div 
-            className="p-2"
+            className="p-2 text-lg md:text-3xl leading-15"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}

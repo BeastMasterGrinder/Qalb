@@ -43,6 +43,7 @@ export function JournalModal({
         <AnimatePresence>
             {isOpen && (
                 <>
+                    {/* Background Blur */}
                     <motion.div
                         className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
                         initial={{ opacity: 0 }}

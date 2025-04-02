@@ -8,14 +8,16 @@ import { motion } from 'framer-motion';
 export default function JournalClientContainer({
     dummyData,
     slug,
-    journalData
+    journalData,
+    className
 }: {
     dummyData: Array<{
         sentiment: string;
         sentence: string;
     }>,
     slug: string,
-    journalData: any
+    journalData: any,
+    className: string
 }) {
     const [selectedEntry, setSelectedEntry] = useState<typeof dummyData[0] | null>(null);
     const [direction, setDirection] = useState<1 | -1>(1);
@@ -46,9 +48,9 @@ export default function JournalClientContainer({
                 duration: 0.8,
                 ease: "easeInOut"
             }}
+            className={className}
         >
             <div className="flex flex-col gap-4 items-center justify-center">
-                <h1>Journal</h1>
                 <JournalText 
                     dummyData={data} 
                     slug={slug} 

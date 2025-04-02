@@ -1,8 +1,8 @@
-'use server'
+'use client'
 import { Button } from "../ui/button"
 import Link from "next/link";
 
-export default async function LogInButton() {
+export default function LogInButton() {
     return (
         <Link href="/sign-in">
             <Button

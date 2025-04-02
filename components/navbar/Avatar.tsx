@@ -5,10 +5,13 @@ import { AvatarButton } from "./avatar-button"
 import LogInButton from "./log-in-button"
 import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
+import { usePathname, useSearchParams } from "next/navigation"
 
 export default function UserAvatar() {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const getUser = async () => {
@@ -24,7 +27,7 @@ export default function UserAvatar() {
         };
 
         getUser();
-    }, []);
+    }, [pathname, searchParams]);
 
     if (loading) {
         return <div className="w-8 h-8 animate-pulse bg-muted rounded-full" />;

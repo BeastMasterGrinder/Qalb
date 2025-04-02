@@ -1,22 +1,42 @@
+'use client'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User } from "lucide-react"
 import { AvatarButton } from "./avatar-button"
 import LogInButton from "./log-in-button"
 import { createClient } from "@/utils/supabase/client"
+import { useEffect, useState } from "react"
 
-export default async function UserAvatar() {
-    const supabase = createClient();
-    const { data: user } = await supabase.auth.getUser();
+export default function UserAvatar() {
+    const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
 
-    console.log("user", user);
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                setUser(user);
+            } catch (error) {
+                console.error("Error fetching user:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getUser();
+    }, []);
+
+    if (loading) {
+        return <div className="w-8 h-8 animate-pulse bg-muted rounded-full" />;
+    }
 
     return (
         <div className="relative">
-            {user.user ? (
+            {user ? (
                 <AvatarButton>
                     <AvatarImage src="/images/pfp.png" />
                     <AvatarFallback>
-                    <User />
+                        <User />
                     </AvatarFallback>
                 </AvatarButton>
             ) : (

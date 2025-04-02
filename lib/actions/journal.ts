@@ -47,7 +47,24 @@ type JournalSentimentEntry = {
 export const getAllJournals = cache(async () => {
     try {
         const supabase = await createClient();
-        const { data, error } = await supabase.from("journals").select("*");
+
+        const { data: user } = await supabase.auth.getUser();
+
+        if (!user || user.user === null) {
+            return { error: "User not found" };
+        }
+
+        const { data, error } = await supabase
+            .from("Journals")
+            .select("*")
+            .eq("user_id", user.user.id);
+
+        if (error) {
+            console.error(error);
+            return { error: "Failed to get journals" };
+        }
+
+        console.log("journals", data);
         return data;
     } catch (error) {
         console.error(error);

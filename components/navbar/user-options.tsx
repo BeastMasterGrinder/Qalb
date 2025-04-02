@@ -1,5 +1,5 @@
 
-import { Settings, User, LogOut } from "lucide-react"
+import { Settings, User, LogOut, NotebookPen  } from "lucide-react"
 import { MenuItems } from "./menu-items"
 import { signOutAction } from "@/lib/actions/auth"
 
@@ -11,6 +11,7 @@ import { signOutAction } from "@/lib/actions/auth"
  */
 const menuItems = [
     { label: "Profile", icon: <User className="w-4 h-4" />, href: "/profile" },
+    { label: "Notes", icon: <NotebookPen className="w-4 h-4" />, href: "/journals" },
     { label: "Settings", icon: <Settings className="w-4 h-4" />, href: "/settings" },
     { 
         label: "Logout", 

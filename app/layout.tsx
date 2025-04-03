@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import { AnimatePresence } from "framer-motion";
 import { quranKareem, uthmanicScript, scheherazade, allahMuhammad, ayatQuran, aalmaghribi, khebratMusamim, ramadhanKarim } from "@/public/fonts/fonts";
+import { PostHogProvider } from './providers'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -39,14 +40,16 @@ export default function RootLayout({
       suppressHydrationWarning>
       <script src="https://accounts.google.com/gsi/client" async></script>
       <body className={`${geistSans.className}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Navbar />
-          <main className="flex-1 flex flex-col overflow-hidden">
-            <AnimatePresence mode="wait">
-              {children}
-            </AnimatePresence>
-          </main>
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <Navbar />
+            <main className="flex-1 flex flex-col overflow-hidden">
+              <AnimatePresence mode="wait">
+                {children}
+              </AnimatePresence>
+            </main>
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

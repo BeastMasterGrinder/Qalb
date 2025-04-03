@@ -100,7 +100,7 @@ export default function DonatePage() {
                                 </div>
                                 <div className="flex items-center justify-center">
                                     <Image 
-                                        src="/easypaisa-qr.png" 
+                                        src="/images/payment/easypaisa-qr.png" 
                                         alt="EasyPaisa QR Code" 
                                         width={200} 
                                         height={200}

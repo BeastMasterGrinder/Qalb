@@ -6,32 +6,45 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState, useEffect } from "react"
-import ThirdPartyAuth from "./auth/third-party-auth"
-import TosBar from "./auth/tos-bar"
+import ThirdPartyAuth from "./third-party-auth"
+import TosBar from "./tos-bar"
 import { signUpAction } from "@/lib/actions/auth"
 import { useSearchParams } from "next/navigation"
-import { Mail } from "lucide-react"
+import SuccessSignup from "@/components/auth/Success-Signup"
+import { useActionState } from 'react'
 
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
     const searchParams = useSearchParams()
-    const successMessage = searchParams.get('success')
+    const successMessage = searchParams.get('success');
+    const [state, action, pending] = useActionState(signUpAction, undefined);
     
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [debouncedEmail, setDebouncedEmail] = useState("")
+    const [debouncedPassword, setDebouncedPassword] = useState("")
     const [passwordsMatch, setPasswordsMatch] = useState(true)
+    const [passwordValid, setPasswordValid] = useState(false)
   
     // Debounce email input
     useEffect(() => {
       const timer = setTimeout(() => {
         setDebouncedEmail(email)
-      }, 800) // 800ms debounce time
+      }, 800)
   
       return () => clearTimeout(timer)
     }, [email])
+  
+    // Separate debounce for password input
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedPassword(password)
+      }, 800)
+  
+      return () => clearTimeout(timer)
+    }, [password])
   
     // Check if email is valid and show password field
     useEffect(() => {
@@ -40,6 +53,18 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
       }
     }, [debouncedEmail])
 
+    // Check if password is valid
+    useEffect(() => {
+      console.log("debouncedPassword", debouncedPassword)
+      if (debouncedPassword) {
+        const isValid = isValidPassword(debouncedPassword)
+        console.log("isValid", isValid)
+        setPasswordValid(isValid)
+      } else {
+        setPasswordValid(false)
+      }
+    }, [debouncedPassword])
+
     // Check if passwords match
     useEffect(() => {
       if (password && confirmPassword) {
@@ -47,51 +72,22 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
       }
     }, [password, confirmPassword])
   
-    // Simple email validation
     const isValidEmail = (email: string) => {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    }
+
+    const isValidPassword = (password: string) => {
+      return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)
     }
     
     // If success message is present, show verification UI
     if (successMessage) {
-      return (
-        <div className={cn("flex flex-col gap-6 items-center text-center", className)} {...props}>
-          <motion.div 
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }} 
-            transition={{ duration: 0.6 }}
-            className="flex flex-col gap-8 items-center max-w-md"
-          >
-            <div className="flex flex-col items-center gap-4">
-              <div className="h-24 w-24 rounded-full bg-primary/10 flex items-center justify-center">
-                <Mail className="h-12 w-12 text-primary" />
-              </div>
-              <h1 className="text-2xl font-bold">Check your email</h1>
-              <p className="text-muted-foreground">
-                We've sent a verification link to your email address. Please check your inbox and click the link to verify your account.
-              </p>
-            </div>
-            <div className="flex flex-col gap-4 w-full">
-              <a href="/sign-in">
-                <Button variant="outline" className="w-full">
-                  Go to Sign in
-                </Button>
-              </a>
-              <p className="text-sm text-muted-foreground">
-                Didn't receive an email? Check your spam folder or{" "}
-                <a href="/sign-up" className="underline underline-offset-4">
-                  try again
-                </a>
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      )
+      return <SuccessSignup />
     }
     
     return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form action={signUpAction}>
+      <form action={action}>
         <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }} 
@@ -121,6 +117,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {state?.errors?.email && (
+                <p className="text-sm text-red-500">{state.errors.email.join(', ')}</p>
+              )}
             </div>
 
             {showPassword && (
@@ -167,13 +166,36 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                       <p className="text-sm text-red-500">Passwords do not match</p>
                     )}
                 </motion.div>
+                {state?.errors?.password && (
+                  <div>
+                    <p>Password must:</p>
+                    <ul>
+                      {state.errors.password.map((error) => (
+                        <li key={error}>- {error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {debouncedPassword && !passwordValid && (
+                  <motion.div 
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }} 
+                    transition={{
+                        duration: 0.4,
+                        ease: "easeIn"
+                    }}
+                    className="grid gap-2"
+                  >
+                    <p className="text-sm text-red-500">Password needs: 8+ chars, ABC, abc, 123, @#$</p>
+                  </motion.div>
+                )}
               </>
             )}
 
             <Button 
               type="submit" 
               className="w-full"
-              disabled={!email || !isValidEmail(email) || !password || !confirmPassword || !passwordsMatch}
+              disabled={!email || !isValidEmail(email) || !password || !isValidPassword(password) || !confirmPassword || !passwordsMatch}
             >
               Sign up
             </Button>

@@ -6,7 +6,24 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-export const signUpAction = async (formData: FormData) => {
+import { SignupFormSchema, FormState } from '@/lib/definations'
+
+export const signUpAction = async (prevState: FormState, formData: FormData) => {
+
+  const validatedFields = SignupFormSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  })
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Invalid fields. Failed to Create Account."
+    }
+  }
+  
+  
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
 

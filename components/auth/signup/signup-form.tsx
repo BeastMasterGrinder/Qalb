@@ -6,18 +6,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState, useEffect } from "react"
-import ThirdPartyAuth from "./third-party-auth"
-import TosBar from "./tos-bar"
+import ThirdPartyAuth from "@/components/auth/third-party-auth"
+import TosBar from "@/components/auth/tos-bar"
 import { signUpAction } from "@/lib/actions/auth"
 import { useSearchParams } from "next/navigation"
-import SuccessSignup from "@/components/auth/Success-Signup"
-import { useActionState } from 'react'
+import SuccessSignup from "@/components/auth/signup/Success-Signup"
 
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
     const searchParams = useSearchParams()
     const successMessage = searchParams.get('success');
-    const [state, action, pending] = useActionState(signUpAction, undefined);
     
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -87,7 +85,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     
     return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form action={action}>
+      <form action={signUpAction}>
         <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }} 
@@ -117,9 +115,6 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {state?.errors?.email && (
-                <p className="text-sm text-red-500">{state.errors.email.join(', ')}</p>
-              )}
             </div>
 
             {showPassword && (
@@ -166,16 +161,6 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                       <p className="text-sm text-red-500">Passwords do not match</p>
                     )}
                 </motion.div>
-                {state?.errors?.password && (
-                  <div>
-                    <p>Password must:</p>
-                    <ul>
-                      {state.errors.password.map((error) => (
-                        <li key={error}>- {error}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
                 {debouncedPassword && !passwordValid && (
                   <motion.div 
                     initial={{ y: -20, opacity: 0 }}

@@ -8,19 +8,20 @@ import { revalidatePath } from "next/cache";
 
 import { SignupFormSchema, FormState } from '@/lib/definations'
 
-export const signUpAction = async (prevState: FormState, formData: FormData) => {
+export const signUpAction = async (formData: FormData) => {
 
+  console.log("signUpAction");
   const validatedFields = SignupFormSchema.safeParse({
-    name: formData.get("name"),
     email: formData.get("email"),
     password: formData.get("password"),
   })
 
   if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Invalid fields. Failed to Create Account."
-    }
+    return encodedRedirect(
+      "error",
+      "/sign-up",
+      "Email and password are not correct"
+    );
   }
   
   
@@ -67,7 +68,7 @@ export const signUpAction = async (prevState: FormState, formData: FormData) => 
   return encodedRedirect(
     "success",
     "/sign-up",
-    "Thanks for signing up! Please check your email for a verification link."
+    "Account created successfully"
   );
 };
 
@@ -80,7 +81,6 @@ export const signInAction = async (formData: FormData) => {
     email,
     password,
   });
-
   if (error) {
     return encodedRedirect("error", "/sign-in", error.message);
   }

@@ -6,18 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function DonatePage() {
     const [amount, setAmount] = useState<string>('10');
     const [loading, setLoading] = useState(false);
-
-    const handleStripePayment = async () => {
-        setLoading(true);
-        // Stripe integration will go here
-        setLoading(false);
-    };
 
     return (
         <motion.div
@@ -48,47 +42,51 @@ export default function DonatePage() {
                         </TabsList>
                         
                         <TabsContent value="card">
-                            <div className="space-y-4 mt-4">
-                                <div className="space-y-2">
-                                    <Label>Donation Amount (USD)</Label>
-                                    <div className="flex gap-2 flex-wrap">
-                                        {['5', '10', '20', '50', '100'].map((value) => (
-                                            <Button
-                                                key={value}
-                                                variant={amount === value ? "default" : "outline"}
-                                                onClick={() => setAmount(value)}
-                                                className="flex-1 min-w-[80px]"
-                                            >
-                                                ${value}
-                                            </Button>
-                                        ))}
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <form action="/api/checkout-sessions" method="POST" className="space-y-4 mt-4">
+                                    <input type="hidden" name="amount" value={amount} />
+                                    <div className="space-y-2">
+                                        <Label>Donation Amount (USD)</Label>
+                                        <div className="flex gap-2 flex-wrap">
+                                            {['5', '10', '20', '50', '100'].map((value) => (
+                                                <Button
+                                                    key={value}
+                                                    type="button"
+                                                    variant={amount === value ? "default" : "outline"}
+                                                    onClick={() => setAmount(value)}
+                                                    className="flex-1 min-w-[80px]"
+                                                >
+                                                    ${value}
+                                                </Button>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Custom Amount</Label>
-                                    <div className="flex gap-2">
-                                        <span className="flex items-center bg-muted px-3 rounded-l-md">$</span>
-                                        <Input
-                                            type="number"
-                                            value={amount}
-                                            onChange={(e) => setAmount(e.target.value)}
-                                            placeholder="Enter amount"
-                                            className="rounded-l-none"
-                                        />
+                                    <div className="space-y-2">
+                                        <Label>Custom Amount</Label>
+                                        <div className="flex gap-2">
+                                            <span className="flex items-center bg-muted px-3 rounded-l-md">$</span>
+                                            <Input
+                                                type="number"
+                                                value={amount}
+                                                onChange={(e) => setAmount(e.target.value)}
+                                                placeholder="Enter amount"
+                                                className="rounded-l-none"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <Button 
-                                    className="w-full" 
-                                    onClick={handleStripePayment}
-                                    disabled={loading}
-                                >
-                                    {loading ? "Processing..." : "Donate with Card"}
-                                </Button>
-                                <div className="flex items-center justify-center gap-2 mt-4">
-                                    <Image src="/stripe.svg" alt="Stripe" width={50} height={25} />
-                                    <span className="text-sm text-muted-foreground">Secure payments by Stripe</span>
-                                </div>
-                            </div>
+                                    <Button 
+                                        className="w-full" 
+                                        type="submit"
+                                        disabled={loading}
+                                    >
+                                        {loading ? "Processing..." : "Donate with Card"}
+                                    </Button>
+                                    <div className="flex items-center justify-center gap-2 mt-4">
+                                        <Image src="/stripe.svg" alt="Stripe" width={50} height={25} />
+                                        <span className="text-sm text-muted-foreground">Secure payments by Stripe</span>
+                                    </div>
+                                </form>
+                            </Suspense>
                         </TabsContent>
                         
                         <TabsContent value="easypaisa">
@@ -96,7 +94,6 @@ export default function DonatePage() {
                                 <div className="p-4 bg-muted rounded-lg">
                                     <h3 className="font-semibold mb-2">EasyPaisa Account Details</h3>
                                     <p className="text-muted-foreground">Account Title: Muhammad Farjad</p>
-                                    <p className="text-muted-foreground">Phone Number: +92 331 2862123</p>
                                 </div>
                                 <div className="flex items-center justify-center">
                                     <Image 

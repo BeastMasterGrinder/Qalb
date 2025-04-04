@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 
 export default function DonatePage() {
     const [amount, setAmount] = useState<string>('10');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     return (
         <motion.div
@@ -41,7 +41,7 @@ export default function DonatePage() {
                             <TabsTrigger value="easypaisa">EasyPaisa</TabsTrigger>
                         </TabsList>
                         
-                        <TabsContent value="card">
+                        <TabsContent value="card" aria-disabled={true}>
                             <Suspense fallback={<div>Loading...</div>}>
                                 <form action="/api/checkout-sessions" method="POST" className="space-y-4 mt-4">
                                     <input type="hidden" name="amount" value={amount} />
@@ -79,7 +79,7 @@ export default function DonatePage() {
                                         type="submit"
                                         disabled={loading}
                                     >
-                                        {loading ? "Processing..." : "Donate with Card"}
+                                        {loading ? "Sorry, this is not available yet. Use Easypaisa instead!" : "Donate with Card"}
                                     </Button>
                                     <div className="flex items-center justify-center gap-2 mt-4">
                                         <Image src="/stripe.svg" alt="Stripe" width={50} height={25} />

@@ -1,8 +1,51 @@
 import { Button } from "../ui/button"
+import Script from "next/script"
+import { createClient } from "@/utils/supabase/client";
+
 
 export default function ThirdPartyAuth() {
+    // Create Supabase client
+    const supabase = createClient()
+    
     return (
         <>
+            <Script id="handleSignInWithGoogle">{`
+            // Function to generate and hash a nonce
+            function generateNonce() {
+                const rawNonce = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+                
+                // Store the raw nonce in sessionStorage to use when signing in
+                sessionStorage.setItem('supabaseAuthNonce', rawNonce);
+                
+                // Return the raw nonce (Google will hash it internally)
+                return rawNonce;
+            }
+            
+            // Make handler function available globally
+            window.handleSignInWithGoogle = async (response) => {
+                const supabase = createClientComponentClient();
+                const nonce = sessionStorage.getItem('supabaseAuthNonce');
+                
+                const { data, error } = await supabase.auth.signInWithIdToken({
+                    provider: 'google',
+                    token: response.credential,
+                    nonce: nonce,
+                });
+                
+                if (error) {
+                    console.error('Error signing in:', error);
+                } else {
+                    console.log('Signed in successfully:', data);
+                    window.location.href = '/journals'; // Redirect after successful sign-in
+                }
+            };
+            
+            // Generate nonce when the script loads
+            const nonce = generateNonce();
+            `}</Script>
+            <Script src="https://accounts.google.com/gsi/client" async></Script>
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
             <span className="relative z-10 bg-background px-2 text-muted-foreground">Or</span>
             </div>
@@ -16,15 +59,28 @@ export default function ThirdPartyAuth() {
                 </svg>
                 Continue with Facebook
             </Button>
-            <Button variant="outline" className="w-full">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                    d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                    fill="currentColor"
-                />
-                </svg>
-                Continue with Google
-            </Button>
+            <div className="w-full">
+                <div id="g_id_onload"
+                    style={{ colorScheme: 'light'}}
+                    data-client_id="51755943235-j3odssuhl2naght7aun5dm0sdq3u9k5m.apps.googleusercontent.com"
+                    data-context="signup"
+                    data-ux_mode="popup"
+                    data-callback="handleSignInWithGoogle"
+                    data-nonce=""
+                    data-auto_select="true"
+                    data-itp_support="true">
+                </div>
+
+                <div className="g_id_signin"
+                    style={{ colorScheme: 'light'}}
+                    data-type="standard"
+                    data-shape="pill"
+                    data-theme="filled_blue"
+                    data-text="continue_with"
+                    data-size="large"
+                    data-logo_alignment="left">
+                </div>
+            </div>
             </div>
         </>
     )

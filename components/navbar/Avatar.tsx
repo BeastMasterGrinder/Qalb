@@ -13,12 +13,14 @@ export default function UserAvatar() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
+    const [user_avatar, setUserAvatar] = useState<string>("/images/pfp.png");
     useEffect(() => {
         const getUser = async () => {
             try {
                 const supabase = createClient();
                 const { data: { user } } = await supabase.auth.getUser();
                 setUser(user);
+                setUserAvatar(user?.user_metadata?.avatar_url || "/images/pfp.png");
             } catch (error) {
                 console.error("Error fetching user:", error);
             } finally {
@@ -37,7 +39,7 @@ export default function UserAvatar() {
         <div className="relative">
             {user ? (
                 <AvatarButton>
-                    <AvatarImage src="/images/pfp.png" />
+                    <AvatarImage src={user_avatar} />
                     <AvatarFallback>
                         <User />
                     </AvatarFallback>

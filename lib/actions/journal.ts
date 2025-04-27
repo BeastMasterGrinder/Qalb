@@ -4,7 +4,8 @@ import { createClient } from "@/utils/supabase/server";
 import { cache } from "react";
 import sqlite3 from "sqlite3";
 import path from "path";
-import { formatJournalSentiments } from "@/lib/utils";
+import { convertISO_8601_ToNormalDate, formatJournalSentiments } from "@/lib/utils";
+import { date } from "zod";
 // import { getBrowser } from "@/lib/browser/getbrowser";
 const dbPath = path.join(process.cwd(), 'quran-verses.db');
 
@@ -133,6 +134,50 @@ export const getJournal = cache(async (id: string) => {
             // Use the utility function to format the journal data
             return formatJournalSentiments(data);
         }
+    } catch (error) {
+        console.error(error);
+        return { error: "Failed to get journal" };
+    }
+});
+
+
+interface JournalDates {
+    created_at: string
+}
+
+/**
+ * Get a journal by id
+ * @param {string} id - The id of the user
+ * @returns {Promise<Object>} - A promise that resolves to a journal
+ */
+export const getJournalDates = cache(async (id: string) => {
+    try {
+        console.log("id", id);
+        const supabase = await createClient();
+        //check if the user is authenticated
+        const { data: user } = await supabase.auth.getUser();
+
+        if (!user.user){
+            throw new Error("Something wrong with getting user");
+        }
+        
+        console.log("user", user.user.id);
+        const { data , error } = await supabase
+            .from("Journals")
+            .select("created_at")
+            .eq("user_id", user.user.id);
+        if (error) {
+            console.error(error);
+            return { error: "Failed to get journal from Supabase" };
+        }
+        
+        console.log(data);
+
+        const convertedDates = convertISO_8601_ToNormalDate(data.map(item => item.created_at));
+
+        console.log(convertedDates);
+        return convertedDates;
+    
     } catch (error) {
         console.error(error);
         return { error: "Failed to get journal" };

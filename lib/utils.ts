@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { format, parseISO } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -69,4 +70,21 @@ export function formatJournalSentiments(journalData: any[]) {
   });
 
   return formattedEntries;
+}
+
+export function convertISO_8601_ToNormalDate(dates: string[]) : string[]{
+
+  try {
+
+    const newNormalizedDates = dates.map((date) => {
+      const parsedDate = parseISO(date);
+      const formatted = format(parsedDate, 'yyyy-MM-dd');
+      return formatted;
+    });
+
+    return newNormalizedDates;
+  } catch (error){
+    console.log("Error trying to convertISO_8601_ToNormalDate. Error: ", error);
+    return [''];
+  }
 }

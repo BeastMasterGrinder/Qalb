@@ -6,8 +6,10 @@ export default function JournalLayout({
 }) {
     return (
         <div>
-            <CustomBreadcrumb className="px-10 py-6 mb-5 md:mb-20" />
-            {children}
+            <CustomBreadcrumb />
+            <div className="container mx-auto p-4">
+                {children}
+            </div>
         </div>
     );
 }

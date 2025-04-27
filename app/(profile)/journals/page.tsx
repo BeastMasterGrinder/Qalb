@@ -9,7 +9,7 @@ interface PageProps {
 
 export default async function JournalPage({ searchParams }: PageProps) {
   return (
-    <div className="container mx-auto p-4">
+    <div>
       <div className="flex flex-col gap-6">
         {/* Search and Filter Section */}
         <div className="flex flex-col gap-4 justify-center items-center">

@@ -24,8 +24,8 @@ export default async function ProfilePage()  {
     return (
         <>
             <h1>Hi {username}</h1>
-            {/* <Streaks journals={journalsDate} /> */}
-            <Streaks journals={['2025-04-02', '2025-04-03']} />
+            <Streaks journals={journalsDate} />
+            {/* <Streaks journals={['2025-04-02', '2025-04-03']} /> */}
         </>
     )
 }

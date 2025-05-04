@@ -5,7 +5,7 @@ export default function JournalLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div>
+        <div className="mt-20">
             <CustomBreadcrumb />
             <div className="container mx-auto p-4">
                 {children}

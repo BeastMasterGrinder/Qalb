@@ -19,7 +19,7 @@ export default function About() {
             transition={{ 
                 duration: 0.8,
             }}
-            className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 p-10 md:p-20"
+            className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 p-10 md:p-20 mt-20"
         >
             <div>
                 <Image src={"/images/aboutme.jpg"} alt="About" width={500} height={500} />

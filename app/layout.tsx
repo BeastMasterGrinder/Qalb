@@ -36,14 +36,13 @@ export default function RootLayout({
       ${aalmaghribi.variable}
       ${khebratMusamim.variable}
       ${ramadhanKarim.variable}
-      `}
-      suppressHydrationWarning>
+      `}>
       <script src="https://accounts.google.com/gsi/client" async></script>
       <body className={`${geistSans.className}`}>
         <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Navbar />
-            <main className="flex-1 flex flex-col overflow-hidden">
+            <main>
               <AnimatePresence mode="wait">
                 {children}
               </AnimatePresence>

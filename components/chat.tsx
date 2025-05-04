@@ -3,10 +3,10 @@ import { CustomExpandingTextarea } from "@/components/custom-textarea"
 
 export default async function Chat() {
     return (
-        <div className="relative">
+        <div className="">
             <CustomExpandingTextarea 
                 placeholder="السلام عليكم"
-                className="placeholder:font-quran-kareem placeholder:text-verse placeholder:text-center placeholder:text-xl text-xl pr-12"
+                className="placeholder:font-quran-kareem placeholder:text-verse placeholder:text-center placeholder:text-2xl md:placeholder:text-3xl text-xl p-12"
             />
         </div>
     )

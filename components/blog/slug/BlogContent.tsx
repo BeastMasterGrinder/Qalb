@@ -1,6 +1,6 @@
 "use client";
 
-import { staggerContainer, fadeInUp } from "@/app/blog/[slug]/variants";
+import { staggerContainer, fadeInUp } from "@/app/(bread-cumbs)/blog/[slug]/variants";
 import { Blog } from "@/types/blogs";
 import { motion } from "framer-motion";
 import Link from "next/link";

@@ -11,7 +11,7 @@ const CommonBreadcrumbs = () => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter((item) => item !== "");
 
-  const home = { icon: <House />, url: "/" };
+  const home = { icon: <House className="mx-3 text-xl md:text-lg"/>, url: "/" };
 
   const items: MenuItem[] = segments.map((item, index) => {
     return {
@@ -21,6 +21,7 @@ const CommonBreadcrumbs = () => {
           key={item}
           href={`/${segments.slice(0, index + 1).join("/")}`}
           aria-label={`Go to ${capitalize(item)}`}
+          className="mx-2 text-xl md:text-lg"
         >
           {capitalize(item)}
         </Link>
@@ -32,7 +33,7 @@ const CommonBreadcrumbs = () => {
     <BreadCrumb
       home={home}
       model={items}
-      className="gap-5 px-10 py-6 mb-5 md:mb-10"
+      className="px-2 md:px-20 py-3"
     />
   );
 };

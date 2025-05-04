@@ -67,7 +67,7 @@ export default function Verse() {
   }
 
   return (
-    <div className="container space-y-8">
+    <div className="px-5">
       <AnimatePresence mode="wait">
         <motion.div
           key={verse.key} // Important for triggering re-render on verse change
@@ -81,7 +81,7 @@ export default function Verse() {
           className="space-y-8"
         >
           <motion.div 
-            className="sm:text-lg lg:text-4xl quran-text text-center text-verse leading-relaxed"
+            className="text-2xl  md:text-3xl lg:text-4xl quran-text text-center text-verse verse-text"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -95,7 +95,7 @@ export default function Verse() {
           </motion.div>
           
           <motion.div 
-            className="sm:text-sm lg:text-xl leading-loose"
+            className="text-xl md:text-2xl lg:text-xl leading-loose verse-translation"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -109,7 +109,7 @@ export default function Verse() {
           </motion.div>
           
           <motion.div 
-            className="text-md text-gray-300"
+            className="text-sm md:text-lg text-verse"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

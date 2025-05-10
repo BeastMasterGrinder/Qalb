@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import { AnimatePresence } from "framer-motion";
 import { quranKareem, uthmanicScript, scheherazade, allahMuhammad, ayatQuran, aalmaghribi, khebratMusamim, ramadhanKarim } from "@/public/fonts/fonts";
 import { PostHogProvider } from './providers'
+import { Icon } from "lucide-react";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -14,6 +15,9 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "قلب",
   description: "قلب",
+  icons: {
+    icon: '/favicon.png'
+  }
 };
 
 const geistSans = Geist({
@@ -39,7 +43,7 @@ export default function RootLayout({
       `}>
       <script src="https://accounts.google.com/gsi/client" async></script>
       <body className={`${geistSans.className}`}>
-        <PostHogProvider>
+        {/* <PostHogProvider> */}
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Navbar />
             <main>
@@ -48,7 +52,7 @@ export default function RootLayout({
               </AnimatePresence>
             </main>
           </ThemeProvider>
-        </PostHogProvider>
+        {/* </PostHogProvider> */}
       </body>
     </html>
   );

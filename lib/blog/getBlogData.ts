@@ -1,8 +1,9 @@
 import { Blog } from "@/types/blogs";
 import { createClient } from "@/utils/supabase/server";
+import { cache } from "react";
 
 
-export default async function getBlogData(slug: string) {
+const  getBlogData = cache(  async(slug: string) => {
     const supabase = await createClient();
     
     try {
@@ -22,4 +23,6 @@ export default async function getBlogData(slug: string) {
       console.error('Exception fetching blog:', error);
       return null;
     }
-  }
+  });
+
+export default getBlogData

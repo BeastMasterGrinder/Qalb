@@ -13,11 +13,52 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "قلب",
-  description: "قلب",
+  title: {
+    default: "قلب | Qalb - Your Spiritual Companion",
+    template: "%s | Qalb"
+  },
+  description: "Qalb - Your spiritual companion for Quranic learning and Islamic knowledge and Journaling. Explore beautiful Arabic calligraphy, Quranic verses, and Islamic teachings with our modern, accessible platform.",
+  keywords: ["Quran", "Islamic", "Arabic", "Calligraphy", "Spiritual", "Learning", "Qalb", "قلب", "Journal"],
+  authors: [{ name: "Farjad" }],
+  creator: "Farjad",
+  publisher: "Qalb",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "قلب | Qalb - Your Spiritual Companion",
+    description: "Qalb - Your spiritual companion for Quranic learning and Islamic knowledge. Explore beautiful Arabic calligraphy, Quranic verses, and Islamic teachings with our modern, accessible platform.",
+    url: defaultUrl,
+    siteName: "Qalb",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "قلب | Qalb - Your Spiritual Companion",
+    description: "Qalb - Your spiritual companion for Quranic learning and Islamic knowledge and Journaling. Explore beautiful Arabic calligraphy, Quranic verses, and Islamic teachings with our modern, accessible platform.",
+    creator: "@QalbApp",
+  },
   icons: {
-    icon: '/favicon.png'
-  }
+    icon: '/favicon.png',
+    apple: '/favicon.png',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 const geistSans = Geist({

@@ -2,6 +2,26 @@ import { Suspense } from "react";
 import AnimatedHeader from "@/components/blog/AnimateHeader";
 import BlogList from "@/components/blog/BlogList";
 import { LoadingBlogLists } from "./loading";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Explore our collection of Islamic articles, Quranic insights, and spiritual guidance. Discover wisdom and knowledge through our carefully curated blog posts.",
+  openGraph: {
+    title: "Blog | Qalb",
+    description: "Explore our collection of Islamic articles, Quranic insights, and spiritual guidance. Discover wisdom and knowledge through our carefully curated blog posts.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Qalb",
+    description: "Explore our collection of Islamic articles, Quranic insights, and spiritual guidance. Discover wisdom and knowledge through our carefully curated blog posts.",
+  },
+  alternates: {
+    canonical: '/blog',
+  },
+};
+
 export default function BlogPage() {
   return (
     <div className="container mx-auto px-4 py-12">

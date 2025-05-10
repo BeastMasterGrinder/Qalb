@@ -32,7 +32,7 @@ export function AvatarButton({ children }: AvatarButtonProps) {
             >
                 {children}
             </Avatar>
-            {isOpen && <UserOptions />}
+            {isOpen && <UserOptions setIsOpen={setIsOpen} />}
         </div>
     )
 } 

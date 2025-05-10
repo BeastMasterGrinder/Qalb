@@ -13,9 +13,10 @@ interface MenuItem {
 
 interface MenuItemsProps {
     items: readonly MenuItem[];
+    onItemClick?: () => void;
 }
 
-export function MenuItems({ items }: MenuItemsProps) {
+export function MenuItems({ items, onItemClick }: MenuItemsProps) {
     return (
         <AnimatePresence>
             <motion.div
@@ -30,6 +31,7 @@ export function MenuItems({ items }: MenuItemsProps) {
                             <button 
                                 type="submit"
                                 className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-muted transition-colors text-left"
+                                onClick={onItemClick}
                             >
                                 {item.icon}
                                 {item.label}
@@ -40,6 +42,7 @@ export function MenuItems({ items }: MenuItemsProps) {
                             key={item.label}
                             href={item.href}
                             className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-muted transition-colors"
+                            onClick={onItemClick}
                         >
                             {item.icon}
                             {item.label}

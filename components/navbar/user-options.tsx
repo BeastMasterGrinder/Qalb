@@ -1,7 +1,11 @@
-
-import { Settings, User, LogOut, NotebookPen  } from "lucide-react"
+import { Settings, User, LogOut, NotebookPen } from "lucide-react"
 import { MenuItems } from "./menu-items"
 import { signOutAction } from "@/lib/actions/auth"
+import { Dispatch, SetStateAction } from "react"
+
+interface UserOptionsProps {
+    setIsOpen: Dispatch<SetStateAction<boolean>>
+}
 
 /**
  * A user options component which on click opens a dropdown menu with the following options:
@@ -21,10 +25,10 @@ const menuItems = [
     },
 ] as const;
 
-export default function UserOptions() {
+export default function UserOptions({ setIsOpen }: UserOptionsProps) {
     return (
-        <div className="relative">
-            <MenuItems items={menuItems} />
+        <div className="relative backdrop-blur-xl bg-background/80 border border-border/50 rounded-lg shadow-lg">
+            <MenuItems items={menuItems} onItemClick={() => setIsOpen(false)} />
         </div>
     )
 }

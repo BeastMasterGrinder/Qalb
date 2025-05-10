@@ -96,7 +96,7 @@ export default function SentimentVerses({
                         <AccordionTrigger className="mb-2 text-lg">{verse.verse}</AccordionTrigger>
                         {verse.verse_key && (
                             <AccordionContent className="text-sm text-gray-500">
-                                {verse.verse_key}
+                                Verse Number: {verse.verse_key}
                             </AccordionContent>
                         )}
                     </AccordionItem >

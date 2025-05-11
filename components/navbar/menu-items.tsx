@@ -3,12 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
 import { ReactNode } from "react"
+import { useRouter } from "next/navigation"
 
 interface MenuItem {
     label: string;
     icon: ReactNode;
     href: string;
-    action?: () => Promise<void>;
+    action?: string;
 }
 
 interface MenuItemsProps {
@@ -17,6 +18,31 @@ interface MenuItemsProps {
 }
 
 export function MenuItems({ items, onItemClick }: MenuItemsProps) {
+    const router = useRouter();
+
+    const handleAction = async (action: string) => {
+        if (onItemClick) onItemClick();
+        
+        try {
+            const response = await fetch(action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (response.ok) {
+                router.refresh();
+                // If the server redirects, we need to follow it
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+            }
+        } catch (error) {
+            console.error('Error performing action:', error);
+        }
+    };
+
     return (
         <AnimatePresence>
             <motion.div
@@ -27,16 +53,14 @@ export function MenuItems({ items, onItemClick }: MenuItemsProps) {
             >
                 {items.map((item) => (
                     item.action ? (
-                        <form key={item.label} action={item.action}>
-                            <button 
-                                type="submit"
-                                className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-muted transition-colors text-left"
-                                onClick={onItemClick}
-                            >
-                                {item.icon}
-                                {item.label}
-                            </button>
-                        </form>
+                        <button 
+                            key={item.label}
+                            onClick={() => handleAction(item.action!)}
+                            className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-muted transition-colors text-left"
+                        >
+                            {item.icon}
+                            {item.label}
+                        </button>
                     ) : (
                         <Link
                             key={item.label}

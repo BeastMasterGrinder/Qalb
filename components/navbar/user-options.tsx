@@ -21,7 +21,7 @@ const menuItems = [
         label: "Logout", 
         icon: <LogOut className="w-4 h-4" />, 
         href: "#",
-        action: signOutAction
+        action: '/auth/signout'
     },
 ] as const;
 

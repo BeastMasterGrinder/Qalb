@@ -23,7 +23,7 @@ export function MenuItems({ items, onItemClick }: MenuItemsProps) {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="absolute right-0 mt-2 w-48 py-2 bg-popover border rounded-lg shadow-lg z-50"
+                className="absolute right-0 w-48  bg-popover z-16 backdrop-blur-xl bg-background/80 border border-border/50 rounded-lg shadow-lg"
             >
                 {items.map((item) => (
                     item.action ? (

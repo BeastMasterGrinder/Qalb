@@ -27,7 +27,7 @@ const menuItems = [
 
 export default function UserOptions({ setIsOpen }: UserOptionsProps) {
     return (
-        <div className="relative backdrop-blur-xl bg-background/80 border border-border/50 rounded-lg shadow-lg">
+        <div className="relative">
             <MenuItems items={menuItems} onItemClick={() => setIsOpen(false)} />
         </div>
     )

@@ -11,6 +11,8 @@ import TosBar from "@/components/auth/tos-bar"
 import { signUpAction } from "@/lib/actions/auth"
 import { useSearchParams } from "next/navigation"
 import SuccessSignup from "@/components/auth/signup/Success-Signup"
+import { Noto_Serif_Khitan_Small_Script } from "next/font/google"
+import FieldBox from "./FieldBox"
 
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
@@ -18,6 +20,8 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     const successMessage = searchParams.get('success');
     
     const [email, setEmail] = useState("")
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
@@ -104,18 +108,35 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
             </div>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="farjad@example.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div className="flex flex-row gap-x-3 ">
+              <FieldBox
+                  id="first_name"
+                  name="first_name" 
+                  label="First Name"
+                  type="text"
+                  placeholder="first name"
+                  value={firstName}
+                  onChange={setFirstName}
+                />
+              <FieldBox
+                  id="last_name"
+                  name="last_name" 
+                  label="Last Name"
+                  type="text"
+                  placeholder="last name"
+                  value={lastName}
+                  onChange={setLastName}
+                />
             </div>
+            <FieldBox
+              id="email"
+              name="email" 
+              label="Email"
+              type="email"
+              placeholder="farjad@example.com"
+              value={email}
+              onChange={setEmail}
+            />
 
             {showPassword && (
               <>
@@ -126,17 +147,15 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                         duration: 0.4,
                         ease: "easeIn"
                     }}
-                    className="grid gap-2"
                 >
-                    <Label htmlFor="password">Password</Label>
-                    <Input 
-                      id="password" 
+                    <FieldBox
+                      id="password"
                       name="password" 
-                      type="password" 
-                      placeholder="••••••••" 
-                      required 
+                      label="Password"
+                      type="password"
+                      placeholder="••••••••"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={setPassword}
                     />
                 </motion.div>
                 <motion.div 
@@ -146,16 +165,15 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                         duration: 0.4,
                         ease: "easeIn"
                     }}
-                    className="grid gap-2"
                 >
-                    <Label htmlFor="confirm-password">Confirm Password</Label>
-                    <Input 
-                      id="confirm-password" 
-                      type="password" 
-                      placeholder="••••••••" 
-                      required 
+                    <FieldBox
+                      id="confirm-password"
+                      name="confirm-password" 
+                      label="Confirm Password"
+                      type="password"
+                      placeholder="••••••••"
                       value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onChange={setConfirmPassword}
                     />
                     {!passwordsMatch && password && confirmPassword && (
                       <p className="text-sm text-red-500">Passwords do not match</p>

@@ -62,40 +62,17 @@ export default function ProfileHeader({ initialUsername, avatarUrl }: ProfileHea
                 throw new Error("Not authenticated");
             }
 
-            // First check if the user record exists
-            const { data: existingUser } = await supabase
-                .from('public_user_info')
-                .select('id')
-                .eq('auth_user_id', user.id)
-                .single();
+            const { error } = await supabase
+            .from('profiles')
+            .upsert({
+                id: user?.id as string,
+                username: tempUsername,
+                updated_at: new Date().toISOString()
+            })
 
-            let error;
-
-            if (!existingUser) {
-                // If no record exists, insert
-                const { error: insertError } = await supabase
-                    .from('public_user_info')
-                    .insert({
-                        auth_user_id: user.id,
-                        user_name: tempUsername,
-                        created_at: new Date().toISOString(),
-                        updated_at: new Date().toISOString()
-                    });
-                error = insertError;
-            } else {
-                // If record exists, update
-                const { error: updateError } = await supabase
-                    .from('public_user_info')
-                    .update({ 
-                        user_name: tempUsername,
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq('auth_user_id', user.id);
-                error = updateError;
-            }
 
             if (error) {
-                console.error('Database operation failed:', error);
+                console.log('Database operation failed:', error);
                 toast({
                     variant: "destructive",
                     title: "Error",

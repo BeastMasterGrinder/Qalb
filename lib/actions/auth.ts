@@ -27,6 +27,10 @@ export const signUpAction = async (formData: FormData) => {
   
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
+  const firstName = formData.get("first_name")?.toString();
+  const lastName =  formData.get("last_name")?.toString();
+
+  const fullName = firstName + ' ' + lastName;
 
   const supabase = await createClient();
   const headersList = await headers();
@@ -52,6 +56,10 @@ export const signUpAction = async (formData: FormData) => {
           ? `?redirect=${redirect}&journalId=${journalId}` 
           : ''
       }`,
+      data: {
+        full_name: fullName,
+        source: "Qalb"
+      }
     },
   });
 

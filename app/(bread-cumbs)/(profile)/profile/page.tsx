@@ -37,7 +37,8 @@ export default async function ProfilePage() {
         <div className="w-full max-w-6xl mx-auto p-4">
             <ProfileHeader 
                 initialUsername={username} 
-                avatarUrl={avatarUrl} 
+                avatarUrl={avatarUrl}
+                user_id={user.id} 
             />
             <Streaks journals={journalsDate} />
         </div>

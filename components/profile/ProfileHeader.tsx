@@ -2,24 +2,24 @@
 
 import { useState } from 'react';
 import { Check, Pencil, X } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "lucide-react";
+
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast"
-
+import ProfileAvatar from './ProfileAvatar';
 
 interface ProfileHeaderProps {
     initialUsername: string;
     avatarUrl: string;
+    user_id: string;
 }
 
 const USERNAME_MIN_LENGTH = 3;
 const USERNAME_MAX_LENGTH = 30;
 const USERNAME_REGEX = /^[a-zA-Z0-9_-]+$/;
 
-export default function ProfileHeader({ initialUsername, avatarUrl }: ProfileHeaderProps) {
+export default function ProfileHeader({ initialUsername, avatarUrl, user_id }: ProfileHeaderProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [username, setUsername] = useState(initialUsername);
     const [tempUsername, setTempUsername] = useState(initialUsername);
@@ -57,15 +57,15 @@ export default function ProfileHeader({ initialUsername, avatarUrl }: ProfileHea
                 return;
             }
 
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) {
-                throw new Error("Not authenticated");
-            }
+            // const { data: { user } } = await supabase.auth.getUser();
+            // if (!user) {
+            //     throw new Error("Not authenticated");
+            // }
 
             const { error } = await supabase
             .from('profiles')
             .upsert({
-                id: user?.id as string,
+                id: user_id as string,
                 username: tempUsername,
                 updated_at: new Date().toISOString()
             })
@@ -105,12 +105,8 @@ export default function ProfileHeader({ initialUsername, avatarUrl }: ProfileHea
 
     return (
         <div className="flex items-center gap-6 mb-8">
-            <Avatar className="h-24 w-24">
-                <AvatarImage src={avatarUrl || "/images/pfp.png"} />
-                <AvatarFallback>
-                    <User className="h-12 w-12" />
-                </AvatarFallback>
-            </Avatar>
+            
+            <ProfileAvatar avatarUrl={avatarUrl} user_id={user_id}/>
 
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">

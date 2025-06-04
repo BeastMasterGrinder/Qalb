@@ -15,7 +15,7 @@ export async function getRandomVerse() {
       params: { verse_key: randomVerseKey }
     });
 
-    const text = randomVerseReq.data.verses[0].text_uthmani;
+    let text = randomVerseReq.data.verses[0].text_uthmani;
 
     const randomVerseTranslationReq = await axios.get(
       `https://api.quran.com/api/v4/verses/by_key/${randomVerseKey}`,
@@ -29,8 +29,20 @@ export async function getRandomVerse() {
       }
     );
 
-    let translation = randomVerseTranslationReq.data.verse.translations[0].text;
-    translation = translation.replace(/<sup[^>]*>(.*?)<\/sup>/g, '');
+    console.log(randomVerseTranslationReq.data.verse.translations, randomVerseTranslationReq.data.verse )
+    
+    // Guard rail for translations
+    let translation = "Translation not available";
+    if (randomVerseTranslationReq.data.verse.translations && 
+        randomVerseTranslationReq.data.verse.translations.length > 0) {
+      translation = randomVerseTranslationReq.data.verse.translations[0].text;
+      translation = translation.replace(/<sup[^>]*>(.*?)<\/sup>/g, '');
+    }
+
+    // Guard rail for text
+    if (!text) {
+      text = "Verse text not available";
+    }
 
     return { text, translation, key: randomVerseKey };
   } catch (error) {

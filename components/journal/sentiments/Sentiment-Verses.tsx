@@ -92,7 +92,7 @@ export default function SentimentVerses({
             <h2 className="text-xl font-semibold mb-4">Relevant Quranic Verses</h2>
             <Accordion type="single"collapsible className="space-y-6">
                 {verses.map((verse, index) => (
-                    <AccordionItem  key={index} value={index.toString()} className="p-4 rounded-lg shadow">
+                    <AccordionItem  key={index} value={index.toString()} className="p-4 rounded-2xl shadow">
                         <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl quran-text justify-center text-verse verse-text">{verse.verse_uthmani}</AccordionTrigger>
                         <AccordionContent className="text-lg md:text-xl lg:text-xl leading-loose verse-translation">
                             <span className="text-gray-500">Translation:</span> {verse.verse_text}

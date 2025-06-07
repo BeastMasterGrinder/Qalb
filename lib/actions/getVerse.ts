@@ -2,6 +2,10 @@
 
 import axios from "axios";
 
+// This is the id where of the translation by a person.
+// Can get it from https://api.quran.com/api/v4/resources/translations
+const resource_id = "85";
+
 export async function getRandomVerse() {
   try {
     const randomVerseKeyReq = await axios.get("https://api.quran.com/api/v4/verses/random", {
@@ -18,24 +22,18 @@ export async function getRandomVerse() {
     let text = randomVerseReq.data.verses[0].text_uthmani;
 
     const randomVerseTranslationReq = await axios.get(
-      `https://api.quran.com/api/v4/verses/by_key/${randomVerseKey}`,
+      `https://api.quran.com/api/v4/translations/${resource_id}/by_ayah/${randomVerseKey}`,
       {
         headers: { Accept: "application/json" },
-        params: {
-          language: 'en',
-          words: true,
-          translations: '131'
-        }
       }
     );
 
-    console.log(randomVerseTranslationReq.data.verse.translations, randomVerseTranslationReq.data.verse )
     
     // Guard rail for translations
     let translation = "Translation not available";
-    if (randomVerseTranslationReq.data.verse.translations && 
-        randomVerseTranslationReq.data.verse.translations.length > 0) {
-      translation = randomVerseTranslationReq.data.verse.translations[0].text;
+    if (randomVerseTranslationReq.data.translations && 
+        randomVerseTranslationReq.data.translations.length > 0) {
+      translation = randomVerseTranslationReq.data.translations[0].text;
       translation = translation.replace(/<sup[^>]*>(.*?)<\/sup>/g, '');
     }
 

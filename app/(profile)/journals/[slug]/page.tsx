@@ -15,6 +15,7 @@ import { getJournal } from '@/lib/actions/journal';
 import JournalClientContainer from '@/components/journal/journal-client-container';
 import { getRandomVersesBySentiment } from '@/lib/actions/SentimentVerses';
 import SentimentVerses  from '@/components/journal/sentiments/Sentiment-Verses'
+import ThemeLanterns from '@/components/lanterns/ThemeLanterns';
 
 
 const dummyData = [
@@ -51,7 +52,8 @@ export default async function JournalPage(
     const journalData = await getJournal(slug);
     console.log("journalData", journalData);
     return (
-        <div className='border-2 border-red-500'>
+        <div className=''>
+            <ThemeLanterns />
             {/* Journal */}
             <JournalClientContainer 
                 dummyData={dummyData} 

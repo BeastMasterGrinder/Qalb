@@ -6,6 +6,11 @@ import { AnimatePresence } from "framer-motion";
 import { quranKareem, uthmanicScript, scheherazade, allahMuhammad, ayatQuran, aalmaghribi, khebratMusamim, ramadhanKarim } from "@/public/fonts/fonts";
 import { PostHogProvider } from './providers'
 import { Icon } from "lucide-react";
+import { pingMicroservice } from '@/lib/utils/ping-service';
+import ServicePinger from '@/components/ServicePinger';
+
+// Ping the microservice when the server starts
+pingMicroservice();
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -87,6 +92,7 @@ export default function RootLayout({
         {/* <PostHogProvider> */}
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Navbar />
+            <ServicePinger />
             <main>
               <AnimatePresence mode="wait">
                 {children}

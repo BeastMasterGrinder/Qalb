@@ -5,8 +5,10 @@ import { cache } from 'react';
 const dbPath = path.join(process.cwd(), 'quran-verses.db');
 
 export interface QuranVerse {
+    id?: string;
     verse_key?: string;
-    verse: string;
+    verse_uthmani?: string;
+    verse_text?: string;
     sentiment: string;
     anger_percent?: number;
     fear_percent?: number;
@@ -36,15 +38,17 @@ export const getRandomVersesBySentiment = cache(async (
             
             const query = `
                 SELECT 
-                    verse_key,
-                    verse_text AS verse,
-                    sentiment,
-                    anger_percent,
-                    fear_percent,
-                    joy_percent,
-                    sadness_percent
-                FROM segmented_verses 
-                WHERE sentiment = ? 
+                    sv.verse_key as id,
+                    verses.verse_key as verse_key,
+                    verses.text_uthmani AS verse_uthmani,
+                    sv.verse_text AS verse_text,
+                    sv.sentiment,
+                    sv.anger_percent,
+                    sv.fear_percent,
+                    sv.joy_percent,
+                    sv.sadness_percent
+                FROM segmented_verses sv JOIN verses ON sv.verse_key = verses.id
+                WHERE sv.sentiment = ? 
                 ORDER BY RANDOM() 
                 LIMIT ?
             `;

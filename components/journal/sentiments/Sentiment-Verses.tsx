@@ -90,13 +90,16 @@ export default function SentimentVerses({
     return (
         <div className="py-8 px-5 md:px-[20rem]">
             <h2 className="text-xl font-semibold mb-4">Relevant Quranic Verses</h2>
-            <Accordion type="single" className="space-y-6">
+            <Accordion type="single"collapsible className="space-y-6">
                 {verses.map((verse, index) => (
                     <AccordionItem  key={index} value={index.toString()} className="p-4 rounded-lg shadow">
-                        <AccordionTrigger className="mb-2 text-lg">{verse.verse}</AccordionTrigger>
+                        <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl quran-text justify-center text-verse verse-text">{verse.verse_uthmani}</AccordionTrigger>
+                        <AccordionContent className="text-lg md:text-xl lg:text-xl leading-loose verse-translation">
+                            <span className="text-gray-500">Translation:</span> {verse.verse_text}
+                        </AccordionContent>
                         {verse.verse_key && (
                             <AccordionContent className="text-sm text-gray-500">
-                                Verse Number: {verse.verse_key}
+                                Verse: {verse.verse_key}
                             </AccordionContent>
                         )}
                     </AccordionItem >

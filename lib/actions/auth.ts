@@ -4,10 +4,33 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
+import { SignupFormSchema, FormState } from '@/lib/definations'
 
 export const signUpAction = async (formData: FormData) => {
+
+  console.log("signUpAction");
+  const validatedFields = SignupFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  })
+
+  if (!validatedFields.success) {
+    return encodedRedirect(
+      "error",
+      "/sign-up",
+      "Email and password are not correct"
+    );
+  }
+  
+  
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
+  const firstName = formData.get("first_name")?.toString();
+  const lastName =  formData.get("last_name")?.toString();
+
+  const fullName = firstName + ' ' + lastName;
 
   const supabase = await createClient();
   const headersList = await headers();
@@ -15,7 +38,7 @@ export const signUpAction = async (formData: FormData) => {
   const referer = new URL(headersList.get("referer") || "");
   const redirect = referer.searchParams.get("redirect");
   const journalId = referer.searchParams.get("journalId");
-  console.log("redirect", redirect);
+  // console.log("redirect", redirect);
 
   if (!email || !password) {
     return encodedRedirect(
@@ -33,6 +56,10 @@ export const signUpAction = async (formData: FormData) => {
           ? `?redirect=${redirect}&journalId=${journalId}` 
           : ''
       }`,
+      data: {
+        full_name: fullName,
+        source: "Qalb"
+      }
     },
   });
 
@@ -43,13 +70,13 @@ export const signUpAction = async (formData: FormData) => {
     // get the redirect and journalId from the origin url (/sign-up?redirect=journals&journalId=5f8ed4c0-6b5d-41ec-8ac8-af96314961e0)
     if (data.user && journalId && redirect === "journals") {
     //   const journal = await updateJournal(data.user.id, journalId);
-      console.log("journalId", journalId);
+      // console.log("journalId", journalId);
     }
   }
   return encodedRedirect(
     "success",
     "/sign-up",
-    "Thanks for signing up! Please check your email for a verification link."
+    "Account created successfully"
   );
 };
 
@@ -62,11 +89,11 @@ export const signInAction = async (formData: FormData) => {
     email,
     password,
   });
-
   if (error) {
-    return encodedRedirect("error", "/login", error.message);
+    return encodedRedirect("error", "/sign-in", error.message);
   }
 
+  revalidatePath("/");
   return redirect("/");
 };
 

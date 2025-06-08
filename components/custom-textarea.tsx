@@ -5,10 +5,12 @@ import { useState, type KeyboardEvent, useEffect, useRef } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { getSentiments } from "@/app/actions/getSentiments"
+import { getSentiments } from "@/lib/actions/getSentiments"
 import { ArrowUp } from "lucide-react"
 import { format } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
+import { getBrowser } from "@/lib/browser/getbrowser";
+import { useRouter } from 'next/navigation'
 
 interface CustomExpandingTextareaProps {
   placeholder?: string
@@ -23,6 +25,9 @@ export function CustomExpandingTextarea({
   const [message, setMessage] = useState("")
   const [currentTime, setCurrentTime] = useState(new Date())
   const containerRef = useRef<HTMLDivElement>(null)
+
+
+  const router = useRouter();
 
   // Update time every second when expanded
   useEffect(() => {
@@ -46,20 +51,35 @@ export function CustomExpandingTextarea({
 
   const handleSubmit = async () => {
     try {
-      console.log("sending message")
-      // Replace with your API endpoint
-      const response = await getSentiments(message)
+      // console.log("sending message")
+      const sentimentsResponse = await getSentiments(message)
 
-      console.log(response)
-      if (!response) {
+      // console.log("sentimentsResponse", sentimentsResponse)
+      if (!sentimentsResponse) {
         throw new Error("Failed to send message")
       }
-      // Save the json to local storage
-      localStorage.setItem("sentiments", JSON.stringify(response))
+      // Create a journal to journals route
+      const response = await fetch("/api/journals", {
+        method: "POST",
+        body: JSON.stringify({
+          sentiments: sentimentsResponse,
+          content: message,
+          browserInfo: getBrowser()
+        })
+      })
+      
+      if (!response.ok) {
+        throw new Error("Failed to create journal")
+      }
 
+      console.log("Journal created successfully")
       // Clear the input after successful submission
       setMessage("")
       setIsExpanded(false)
+
+      const data = await response.json();
+      // console.log("data", data);
+      router.push("/journals/" + data.id);
     } catch (error) {
       console.error("Error sending message:", error)
     }
@@ -73,11 +93,11 @@ export function CustomExpandingTextarea({
   }
 
   return (
-    <div className="w-full h-screen flex justify-center" ref={containerRef}>
+    <div className="" ref={containerRef}>
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40"
+            className="fixed md:w-full inset-0 bg-background/80 z-9"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -87,22 +107,22 @@ export function CustomExpandingTextarea({
         )}
       </AnimatePresence>
 
-      <div className="w-full h-full flex justify-center">
+      <div className=" flex justify-center">
         <motion.div
           className={cn(
-            "absolute w-full h-full left-auto right-auto rounded-xl shadow-lg overflow-hidden",
-            "origin-center z-50",
+            "absolute left-auto right-auto ",
+            "origin-center z-10",
             "flex justify-center"
           )}
           initial={false}
           animate={{
             width: isExpanded ? "min(90vw, 800px)" : "100%",
             height: isExpanded ? "min(80vh, 600px)" : "20%",
-            x: isExpanded ? "-80%" : "0%",
-            y: isExpanded ? "-120%" : "0%",
+            x: isExpanded ? "-50%" : "0%",
+            y: isExpanded ? "-50%" : "0%",
             top: isExpanded ? "50vh" : "auto",
             left: isExpanded ? "50vw" : "0",
-            scale: isExpanded ? 1.2 : 0.98,
+            scale: isExpanded ? 1 : 0.90,
             opacity: 1,
           }}
           transition={{
@@ -112,11 +132,11 @@ export function CustomExpandingTextarea({
             mass: 1,
           }}
         >
-          <div className="absolute w-full h-full bg-background/90 backdrop-blur-sm rounded-xl">
+          <div className={`${!isExpanded?"md:w-5/6":"w-full"} w-full bg-background/90 backdrop-blur-sm border rounded-xl`} >
             <AnimatePresence>
               {isExpanded && (
                 <motion.div
-                  className="grid grid-cols-3 items-center px-4 py-2 absolute top-0 left-0 right-0 z-10 bg-background/50 backdrop-blur-sm"
+                  className="grid grid-cols-3 items-center px-4 py-2 absolute top-0 left-0 right-0 z-10 bg-background/50 "
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -145,7 +165,7 @@ export function CustomExpandingTextarea({
                 "w-full h-full pr-12 resize-none",
                 "focus:ring-0 focus:ring-offset-0 focus:outline-none border-0",
                 "bg-transparent transition-all duration-300 ease-in-out",
-                isExpanded ? "text-lg pt-14" : "text-base pt-2",
+                isExpanded ? "text-lg md:text-xl " : "text-base",
                 className,
               )}
             />
@@ -162,18 +182,21 @@ export function CustomExpandingTextarea({
                 damping: 25
               }}
             >
-              <Button
-                onClick={handleSubmit}
-                className={cn(
-                  "p-2 rounded-full",
-                  "bg-primary/80 hover:bg-primary/90",
-                  "shadow-md hover:shadow-lg",
-                  "transition-all duration-300",
+              {
+                isExpanded ? 
+                <Button
+                  onClick={handleSubmit}
+                  className={cn(
+                    "p-2 rounded-full",
+                    "bg-primary/80 hover:bg-primary/90",
+                    "shadow-md hover:shadow-lg",
+                    "transition-all duration-300",
                 )}
                 size="icon"
               >
                 <ArrowUp className="h-4 w-4" />
-              </Button>
+              </Button>:<></>
+              }
             </motion.div>
           </div>
         </motion.div>

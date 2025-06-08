@@ -4,8 +4,9 @@ import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
+import { withSearchParams } from "@/components/common/with-search-params"
 
-export function SearchInput() {
+function SearchInputBase() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [query, setQuery] = useState(searchParams.get("q") || "")
@@ -44,3 +45,5 @@ export function SearchInput() {
     </div>
   )
 }
+
+export const SearchInput = withSearchParams(SearchInputBase)

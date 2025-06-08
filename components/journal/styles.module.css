@@ -1,0 +1,73 @@
+.joy {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(253, 230, 138);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.joy:hover {
+    background-color: rgb(253, 230, 138);
+}
+
+.sadness {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(203, 213, 225);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sadness:hover {
+    background-color: rgb(203, 213, 225);
+}
+
+.fear {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(209, 250, 229);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.fear:hover {
+    background-color: rgb(209, 250, 229);
+}
+
+.anger {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(254, 205, 211);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.anger:hover {
+    background-color: rgb(254, 205, 211);
+}
+
+@media (prefers-color-scheme: dark) {
+    .joy {
+        text-decoration-color: rgb(180, 83, 9);
+    }
+    .joy:hover {
+        background-color: rgb(180, 83, 9);
+    }
+
+    .sadness {
+        text-decoration-color: rgb(51, 65, 85);
+    }
+    .sadness:hover {
+        background-color: rgb(51, 65, 85);
+    }
+
+    .fear {
+        text-decoration-color: rgb(6, 78, 59);
+    }
+    .fear:hover {
+        background-color: rgb(6, 78, 59);
+    }
+
+    .anger {
+        text-decoration-color: rgb(136, 19, 55);
+    }
+    .anger:hover {
+        background-color: rgb(136, 19, 55);
+    }
+} 

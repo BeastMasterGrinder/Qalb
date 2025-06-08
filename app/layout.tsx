@@ -89,7 +89,7 @@ export default function RootLayout({
       `}>
       <script src="https://accounts.google.com/gsi/client" async></script>
       <body className={`${geistSans.className}`}>
-        {/* <PostHogProvider> */}
+        <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Navbar />
             <ServicePinger />
@@ -99,7 +99,7 @@ export default function RootLayout({
               </AnimatePresence>
             </main>
           </ThemeProvider>
-        {/* </PostHogProvider> */}
+        </PostHogProvider>
       </body>
     </html>
   );

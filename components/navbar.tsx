@@ -5,6 +5,7 @@ import { Lato } from "next/font/google";
 import UserAvatar from "@/components/navbar/Avatar";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Suspense } from "react";
 
 const lato = Lato({
     weight: ["400", "700"],
@@ -49,7 +50,9 @@ export default function Navbar() {
                     </Link>
                     <div className="flex items-center gap-2">
                         <ThemeSwitcher />
-                        <UserAvatar />
+                        <Suspense>
+                            <UserAvatar />
+                        </Suspense>
                     </div>
                 </div>
             </div>

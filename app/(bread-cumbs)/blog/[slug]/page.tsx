@@ -3,15 +3,15 @@ import getBlogData from "@/lib/blog/getBlogData";
 import BlogContent from "@/components/blog/slug/BlogContent";
 import { Metadata, ResolvingMetadata } from "next";
 
-type Props = {
-  params: { slug: string }
-}
+type Params = Promise<{ slug: string }>
 
 export async function generateMetadata(
-  { params }: Props,
+  props: {
+    params: Params
+  },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const blog = await getBlogData( (await params).slug);
+  const blog = await getBlogData((await props.params).slug);
   
   if (!blog) {
     return {
@@ -41,18 +41,15 @@ export async function generateMetadata(
       description: blog.excerpt || blog.content.substring(0, 160),
     },
     alternates: {
-      canonical: `/blog/${(await params).slug}`,
+      canonical: `/blog/${(await props.params).slug}`,
     },
   }
 }
 
-export default async function BlogPost({
-  params
-}: {
-  params: Promise<{ slug: string }> | { slug: string }
+export default async function BlogPost(props: {
+  params: Params
 }) {
-  const resolvedParams = await Promise.resolve(params);
-  const blog = await getBlogData(resolvedParams.slug);
+  const blog = await getBlogData((await props.params).slug);
   
   if (!blog) {
     notFound();

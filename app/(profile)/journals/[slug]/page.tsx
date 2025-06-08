@@ -17,6 +17,7 @@ import { getRandomVersesBySentiment } from '@/lib/actions/SentimentVerses';
 import SentimentVerses  from '@/components/journal/sentiments/Sentiment-Verses'
 import ThemeLanterns from '@/components/lanterns/ThemeLanterns';
 
+type Params = Promise<{ slug: string }>
 
 const dummyData = [
     {
@@ -39,16 +40,11 @@ const dummyData = [
 
 const sizing = "flex flex-col items-center justify-center py-5 md:py-16 px-5 md:px-[20rem]  h-full ";
 
-export default async function JournalPage(
-    {
-        params,
-    }: {
-        params: {
-            slug: string;
-        }
-    }
-) {
-    const { slug } = await params;
+export default async function JournalPage(props: {
+    params: Params
+}) {
+    const params = await props.params;
+    const { slug } = params;
     const journalData = await getJournal(slug);
     console.log("journalData", journalData);
     return (

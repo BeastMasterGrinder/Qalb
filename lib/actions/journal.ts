@@ -65,7 +65,7 @@ export const getAllJournals = cache(async () => {
             return { error: "Failed to get journals" };
         }
 
-        console.log("journals", data);
+        // console.log("journals", data);
         return data;
     } catch (error) {
         console.error(error);

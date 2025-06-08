@@ -51,10 +51,10 @@ export function CustomExpandingTextarea({
 
   const handleSubmit = async () => {
     try {
-      console.log("sending message")
+      // console.log("sending message")
       const sentimentsResponse = await getSentiments(message)
 
-      console.log("sentimentsResponse", sentimentsResponse)
+      // console.log("sentimentsResponse", sentimentsResponse)
       if (!sentimentsResponse) {
         throw new Error("Failed to send message")
       }
@@ -78,7 +78,7 @@ export function CustomExpandingTextarea({
       setIsExpanded(false)
 
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
       router.push("/journals/" + data.id);
     } catch (error) {
       console.error("Error sending message:", error)

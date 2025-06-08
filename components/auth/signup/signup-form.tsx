@@ -57,10 +57,10 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 
     // Check if password is valid
     useEffect(() => {
-      console.log("debouncedPassword", debouncedPassword)
+      // console.log("debouncedPassword", debouncedPassword)
       if (debouncedPassword) {
         const isValid = isValidPassword(debouncedPassword)
-        console.log("isValid", isValid)
+        // console.log("isValid", isValid)
         setPasswordValid(isValid)
       } else {
         setPasswordValid(false)

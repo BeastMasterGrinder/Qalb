@@ -38,7 +38,7 @@ export const signUpAction = async (formData: FormData) => {
   const referer = new URL(headersList.get("referer") || "");
   const redirect = referer.searchParams.get("redirect");
   const journalId = referer.searchParams.get("journalId");
-  console.log("redirect", redirect);
+  // console.log("redirect", redirect);
 
   if (!email || !password) {
     return encodedRedirect(
@@ -70,7 +70,7 @@ export const signUpAction = async (formData: FormData) => {
     // get the redirect and journalId from the origin url (/sign-up?redirect=journals&journalId=5f8ed4c0-6b5d-41ec-8ac8-af96314961e0)
     if (data.user && journalId && redirect === "journals") {
     //   const journal = await updateJournal(data.user.id, journalId);
-      console.log("journalId", journalId);
+      // console.log("journalId", journalId);
     }
   }
   return encodedRedirect(

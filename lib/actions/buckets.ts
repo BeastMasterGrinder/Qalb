@@ -16,7 +16,7 @@ export async function getPFPUrl(): Promise<string | Error>{
 
         let path = `${user.id}.jpg`;
         const { data } = await supabase.storage.from('avatars').getPublicUrl(path)
-        console.log("data",data)
+        // console.log("data",data)
         if (!data) {
             throw new Error("Something went wrong when getting the PFP")
         }

@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
         });
     }
 
-    console.log('cookie', cookie);
+    // console.log('cookie', cookie);
     return res;
 }
 

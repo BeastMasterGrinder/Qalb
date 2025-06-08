@@ -20,7 +20,7 @@ export async function getSentiments(prompt:string){
         const jsonSentiments = response?.data;
 
         //@TODO: Remove this console.log
-        console.log(jsonSentiments);
+        // console.log(jsonSentiments);
         return jsonSentiments;
     } catch (error) {
         console.error("Errro from getSentiments: ", error)

@@ -161,8 +161,9 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
       clearInterval(typingInterval.current)
     }
 
-    // Show finalizing
+    // Show finalizing state and ensure it's visible
     typeText(finalState.text, () => {
+      // Add a small delay to ensure the finalizing state is visible
       setTimeout(() => {
         setDisplayText("")
         setCurrentLoadingIndex(-1)
@@ -170,7 +171,7 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
         if (onComplete) {
           onComplete()
         }
-      }, 1000)
+      }, 800) // Shorter delay since we already have a delay in the parent component
     })
   }
 

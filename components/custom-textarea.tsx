@@ -55,15 +55,13 @@ export function CustomExpandingTextarea({
   const handleSubmit = async () => {
     if (!message.trim() || isLoading) return
     try {
-      // console.log("sending message")
       setIsLoading(true)
       const sentimentsResponse = await getSentiments(message)
 
-      // console.log("sentimentsResponse", sentimentsResponse)
       if (!sentimentsResponse) {
         throw new Error("Failed to send message")
       }
-      // Create a journal to journals route
+
       const response = await fetch("/api/journals", {
         method: "POST",
         body: JSON.stringify({
@@ -77,17 +75,20 @@ export function CustomExpandingTextarea({
         throw new Error("Failed to create journal")
       }
 
-      console.log("Journal created successfully")
-      // Clear the input after successful submission
-      setMessage("")
-      setIsExpanded(false)
-
       const data = await response.json();
-      // console.log("data", data);
-      router.push("/journals/" + data.id);
+      
+      // Clear the message but keep the textarea expanded while loading
+      setMessage("")
+      
+      // Add a small delay to ensure the loader completes its animation
+      setTimeout(() => {
+        setIsLoading(false)
+        setIsExpanded(false)
+        router.push("/journals/" + data.id)
+      }, 2000) // 2 second delay to ensure loader animation completes
+
     } catch (error) {
       console.error("Error sending message:", error)
-    } finally {
       setIsLoading(false)
     }
   }

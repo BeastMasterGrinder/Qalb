@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { getRandomVerse } from "@/lib/actions/getVerse"
 import { motion, AnimatePresence } from "framer-motion"
+import { AlertCircle } from "lucide-react"
 
 export default function Verse() {
   const [verse, setVerse] = useState<{ text: string; translation: string; key: string } | null>(null)
@@ -44,7 +45,7 @@ export default function Verse() {
         exit={{ opacity: 0 }}
         className="animate-pulse"
       >
-        Loading verse...
+        <div className="loader"></div>
       </motion.div>
     )
   }
@@ -52,14 +53,17 @@ export default function Verse() {
   if (error) {
     return (
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="text-red-500"
+          className="py-8 text-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
       >
-        {error}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-destructive/10 text-destructive">
+              <AlertCircle className="h-5 w-5" />
+              <span>{error}</span>
+          </div>
       </motion.div>
-    )
+    );
   }
 
   if (!verse) {

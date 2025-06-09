@@ -1,5 +1,5 @@
 "use server"
-import { CustomExpandingTextarea } from "@/components/custom-textarea"
+import { CustomExpandingTextarea } from "@/components/chat/custom-textarea"
 
 export default async function Chat() {
     return (

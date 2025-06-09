@@ -223,9 +223,9 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
         >
           <div className="text-center space-y-6">
             {/* Debug info - remove in production */}
-            <div className="text-xs text-muted-foreground">
+            {/* <div className="text-xs text-muted-foreground">
               Index: {currentLoadingIndex} | States shown: {Array.from(hasShownStates.current).join(", ")}
-            </div>
+            </div> */}
 
             {/* Floating particles */}
             <div className="relative">

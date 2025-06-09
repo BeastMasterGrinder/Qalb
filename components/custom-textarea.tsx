@@ -11,6 +11,7 @@ import { format } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
 import { getBrowser } from "@/lib/browser/getbrowser";
 import { useRouter } from 'next/navigation'
+import { ChatLoader } from "@/components/loading/chat-loader"
 
 interface CustomExpandingTextareaProps {
   placeholder?: string
@@ -24,6 +25,8 @@ export function CustomExpandingTextarea({
   const [isExpanded, setIsExpanded] = useState(false)
   const [message, setMessage] = useState("")
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [isLoading, setIsLoading] = useState(false)
+
   const containerRef = useRef<HTMLDivElement>(null)
 
 
@@ -50,8 +53,10 @@ export function CustomExpandingTextarea({
   }
 
   const handleSubmit = async () => {
+    if (!message.trim() || isLoading) return
     try {
       // console.log("sending message")
+      setIsLoading(true)
       const sentimentsResponse = await getSentiments(message)
 
       // console.log("sentimentsResponse", sentimentsResponse)
@@ -82,11 +87,13 @@ export function CustomExpandingTextarea({
       router.push("/journals/" + data.id);
     } catch (error) {
       console.error("Error sending message:", error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey && !isLoading) {
       e.preventDefault()
       handleSubmit()
     }
@@ -156,16 +163,20 @@ export function CustomExpandingTextarea({
               )}
             </AnimatePresence>
 
+            <ChatLoader isVisible={isLoading} onComplete={() => {}} />
+
             <Textarea
               value={message}
               onChange={handleChange}
               placeholder={placeholder}
+              disabled={isLoading}
               onKeyDown={handleKeyDown}
               className={cn(
                 "w-full h-full pr-12 resize-none",
                 "focus:ring-0 focus:ring-offset-0 focus:outline-none border-0",
                 "bg-transparent transition-all duration-300 ease-in-out",
                 isExpanded ? "text-lg md:text-xl " : "text-base",
+                isLoading && "opacity-50",
                 className,
               )}
             />

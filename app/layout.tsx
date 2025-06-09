@@ -109,7 +109,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <PostHogProvider> */}
+          <PostHogProvider>
             <SuspenseTransitionProvider>
               <PageTransition>
                 <Navbar />
@@ -121,7 +121,7 @@ export default function RootLayout({
                 </main>
               </PageTransition>
             </SuspenseTransitionProvider>
-          {/* </PostHogProvider> */}
+          </PostHogProvider>
         </ThemeProvider>
       </body>
     </html>

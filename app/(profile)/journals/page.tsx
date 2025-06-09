@@ -13,7 +13,9 @@ export default async function JournalPage({ searchParams }: PageProps) {
       <div className="flex flex-col gap-6">
         {/* Search and Filter Section */}
         <div className="flex flex-col gap-4 justify-center items-center">
-          <SearchInput />
+          <Suspense>
+            <SearchInput />
+          </Suspense>
           <Suspense>
             <TagFilter/>
           </Suspense>

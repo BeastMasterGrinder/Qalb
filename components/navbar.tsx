@@ -83,7 +83,9 @@ export default function Navbar() {
                             About Me
                         </Link>
                         <div>
-                            <UserAvatar />
+                            <Suspense>
+                                <UserAvatar />
+                            </Suspense>
                         </div>
                     </div>
                 </div>

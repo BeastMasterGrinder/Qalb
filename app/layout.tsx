@@ -11,7 +11,7 @@ import ServicePinger from '@/components/ServicePinger';
 import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { PageTransition } from "@/components/transitions/page-transition"
-import { TransitionProvider } from "@/components/transitions/transition-provider"
+import { SuspenseTransitionProvider } from "@/components/transitions/transition-provider"
 
 // Ping the microservice when the server starts
 pingMicroservice();
@@ -110,7 +110,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {/* <PostHogProvider> */}
-            <TransitionProvider>
+            <SuspenseTransitionProvider>
               <PageTransition>
                 <Navbar />
                 <ServicePinger />
@@ -120,7 +120,7 @@ export default function RootLayout({
                   </AnimatePresence>
                 </main>
               </PageTransition>
-            </TransitionProvider>
+            </SuspenseTransitionProvider>
           {/* </PostHogProvider> */}
         </ThemeProvider>
       </body>

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { usePathname, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 
 interface TransitionProviderProps {
   children: React.ReactNode
@@ -69,3 +69,11 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
     </>
   )
 } 
+
+export function SuspenseTransitionProvider({ children }: TransitionProviderProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TransitionProvider>{children}</TransitionProvider>
+    </Suspense>
+  )
+}

@@ -96,33 +96,34 @@ export default function RootLayout({
       ${khebratMusamim.variable}
       ${ramadhanKarim.variable}
       `}>
-      <head />
+      <script src="https://accounts.google.com/gsi/client" async></script>
+        
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <PostHogProvider>
-            <SuspenseTransitionProvider>
-              <PageTransition>
-                <Navbar />
-                <ServicePinger />
-                <main>
-                  <AnimatePresence mode="wait">
-                    {children}
-                  </AnimatePresence>
-                </main>
-              </PageTransition>
-            </SuspenseTransitionProvider>
-          </PostHogProvider>
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+              <SuspenseTransitionProvider>
+                <PageTransition>
+                  <Navbar />
+                  <ServicePinger />
+                  <main>
+                    <AnimatePresence mode="wait">
+                      {children}
+                    </AnimatePresence>
+                  </main>
+                </PageTransition>
+              </SuspenseTransitionProvider>
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

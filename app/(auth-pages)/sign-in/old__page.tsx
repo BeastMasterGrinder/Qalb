@@ -1,6 +1,6 @@
 import { signInAction } from "@/lib/actions/auth";
 import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
+import { SubmitButton } from "@/components/chat/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";

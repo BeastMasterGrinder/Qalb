@@ -1,6 +1,6 @@
-import Verse from "@/components/verse";
+import Verse from "@/components/chat/verse";
 import { Suspense } from "react";
-import Chat from "@/components/chat";
+import Chat from "@/components/chat/chat";
 import BackgroundPaths from "@/components/kokonutui/background-paths";
 
 export default function Home() {

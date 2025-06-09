@@ -9,8 +9,8 @@ import { getSentiments } from "@/lib/actions/getSentiments"
 import { ArrowUp } from "lucide-react"
 import { format } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
-import { getBrowser } from "@/lib/browser/getbrowser";
-import { useRouter } from 'next/navigation'
+import { getBrowser } from "@/lib/browser/getbrowser"
+import { useRouter } from "next/navigation"
 import { ChatLoader } from "@/components/loading/chat-loader"
 
 interface CustomExpandingTextareaProps {
@@ -28,7 +28,6 @@ export function CustomExpandingTextarea({
   const [isLoading, setIsLoading] = useState(false)
 
   const containerRef = useRef<HTMLDivElement>(null)
-
 
   const router = useRouter();
 
@@ -75,17 +74,17 @@ export function CustomExpandingTextarea({
         throw new Error("Failed to create journal")
       }
 
-      const data = await response.json();
+      const data = await response.json()
       
       // Clear the message but keep the textarea expanded while loading
       setMessage("")
       
-      // Add a small delay to ensure the loader completes its animation
+      // Add a small delay before navigation to allow for transition
       setTimeout(() => {
         setIsLoading(false)
         setIsExpanded(false)
-        router.push("/journals/" + data.id)
-      }, 2000) // 2 second delay to ensure loader animation completes
+        router.push(`/journals/${data.id}`, { scroll: false })
+      }, 1000)
 
     } catch (error) {
       console.error("Error sending message:", error)

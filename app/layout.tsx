@@ -8,6 +8,10 @@ import { PostHogProvider } from './providers'
 import { Icon } from "lucide-react";
 import { pingMicroservice } from '@/lib/utils/ping-service';
 import ServicePinger from '@/components/ServicePinger';
+import { Inter } from "next/font/google"
+import { cn } from "@/lib/utils"
+import { PageTransition } from "@/components/transitions/page-transition"
+import { TransitionProvider } from "@/components/transitions/transition-provider"
 
 // Ping the microservice when the server starts
 pingMicroservice();
@@ -71,13 +75,18 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const fontSans = Inter({
+  variable: "--font-sans",
+  subsets: ["latin"],
+});
+
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" className={
+    <html lang="en" suppressHydrationWarning className={
       `${quranKareem.variable} 
       ${uthmanicScript.variable}
       ${scheherazade.variable}
@@ -87,19 +96,33 @@ export default function RootLayout({
       ${khebratMusamim.variable}
       ${ramadhanKarim.variable}
       `}>
-      <script src="https://accounts.google.com/gsi/client" async></script>
-      <body className={`${geistSans.className}`}>
-        {/* <PostHogProvider> */}
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <Navbar />
-            <ServicePinger />
-            <main>
-              <AnimatePresence mode="wait">
-                {children}
-              </AnimatePresence>
-            </main>
-          </ThemeProvider>
-        {/* </PostHogProvider> */}
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* <PostHogProvider> */}
+            <TransitionProvider>
+              <PageTransition>
+                <Navbar />
+                <ServicePinger />
+                <main>
+                  <AnimatePresence mode="wait">
+                    {children}
+                  </AnimatePresence>
+                </main>
+              </PageTransition>
+            </TransitionProvider>
+          {/* </PostHogProvider> */}
+        </ThemeProvider>
       </body>
     </html>
   );

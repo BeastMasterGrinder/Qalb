@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "buildCommand": "chmod 644 quran-verses.db && next build",
+  "functions": {
+    "app/api/journals/route.ts": {
+      "maxDuration": 10
+    }
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "build": {
+    "env": {
+      "SQLITE_PERMISSIONS": "644"
+    }
+  }
+} 

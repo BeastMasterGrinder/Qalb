@@ -8,6 +8,7 @@ const  getBlogData = cache(  async(slug: string) => {
     
     try {
       const { data: blog, error } = await supabase
+        .schema('private')
         .from('blogs')
         .select('*')
         .eq('slug', slug)

@@ -6,6 +6,7 @@ export default async function BlogList() {
   const supabase = await createClient();
   
   const { data: blogs, error } = await supabase
+    .schema('private')
     .from('blogs')
     .select('*')
     .order('created_at', { ascending: false });

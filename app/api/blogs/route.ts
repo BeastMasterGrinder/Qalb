@@ -51,7 +51,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     
     // Check for slug uniqueness
     const supabase = await createClient();
-    const { data: existingBlog } = await supabase
+    const { data: existingBlog } = await supabase.schema('private')
       .from('blogs')
       .select('slug')
       .eq('slug', slug)
@@ -65,6 +65,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     
     // Insert the blog post
     const { error: insertError } = await supabase
+      .schema('private')
       .from('blogs')
       .insert({
         title,
@@ -138,6 +139,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
     // Check if blog exists
     const supabase = await createClient();
     const { data: existingBlog } = await supabase
+      .schema('private')
       .from('blogs')
       .select('*')
       .eq('slug', slug)

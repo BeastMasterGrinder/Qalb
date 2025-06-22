@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getJournalDates } from "@/lib/actions/journal";
 import Streaks from "@/components/profile/streaks";
 import ProfileHeader from "@/components/profile/ProfileHeader";
-import { getSignedURL } from "@/lib/actions/singedUrl";
+import { getSignedURLServer } from "@/lib/actions/signedUrlServer";
 import { error } from "console";
 
 export default async function ProfilePage() {
@@ -28,7 +28,7 @@ export default async function ProfilePage() {
     }
 
     const username = userInfo?.username || "";
-    const avatarUrl = await getSignedURL(user.user_metadata.avatar_url);
+    const avatarUrl = await getSignedURLServer(user.user_metadata.avatar_url);
     const journalsDateResult = await getJournalDates(user.id);
     
     // Check if result is an error object

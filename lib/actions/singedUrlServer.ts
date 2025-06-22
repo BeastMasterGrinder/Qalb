@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
 
-
 export async function getSignedURL(path : string): Promise<string> {
     const supabase = await createClient();
 

@@ -1,5 +1,6 @@
 "use server";
 
+import { AuthClientServer } from "@/utils/supabase/auth";
 import { createClient } from "@/utils/supabase/server";
 
 /**
@@ -23,5 +24,29 @@ export async function checkUser(): Promise<string | null> {
     } catch (err) {
         console.error("Exception in checkUser function:", err);
         return null;
+    }
+}
+
+export async function updateUserMetadata(id: string, path: string): Promise<boolean> {
+    try{
+
+        const  supabase = await AuthClientServer();
+        if (!supabase){
+            return false;
+        }
+
+        const { data: user, error } = await supabase.updateUserById(
+            id,
+            { user_metadata: { avatar_url: path } }
+            )
+
+        if (!user){
+            console.log("Something went wrong with updateing user metadata", error?.message)
+            return false
+        }
+
+        return true;
+    } catch {
+        return false;
     }
 }

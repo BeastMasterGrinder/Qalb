@@ -6,7 +6,7 @@ import LogInButton from "./log-in-button"
 import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
-import { getSignedURL } from "@/lib/actions/singedUrlServer"
+import { getSignedURLClient } from "@/lib/actions/signedUrlClient"
 
 export default function UserAvatar() {
     const [user, setUser] = useState<any>(null);
@@ -21,7 +21,7 @@ export default function UserAvatar() {
                 const supabase = createClient();
                 const { data: { user } } = await supabase.auth.getUser();
                 setUser(user);
-                setUserAvatar(await getSignedURL(user?.user_metadata?.avatar_url) || "/images/pfp.png");
+                setUserAvatar(await getSignedURLClient(user?.user_metadata?.avatar_url) || "/images/pfp.png");
             } catch (error) {
                 console.error("Error fetching user:", error);
             } finally {

@@ -1,3 +1,5 @@
+"use client"
+
 import * as motion from "motion/react-client"
 
 function FloatingPaths({ position }: { position: number }) {

@@ -84,11 +84,11 @@ export function CustomExpandingTextarea({
       setMessage("")
       
       // Add a small delay before navigation to allow for transition
-      setTimeout(() => {
+      // setTimeout(() => {
         setIsLoading(false)
         setIsExpanded(false)
         router.push(`/journals/${data.id}`, { scroll: false })
-      }, 1000)
+      // }, 1000)
 
     } catch (error) {
       console.error("Error sending message:", error)

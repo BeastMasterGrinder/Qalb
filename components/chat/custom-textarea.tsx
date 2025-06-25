@@ -71,7 +71,11 @@ export function CustomExpandingTextarea({
       })
       
       if (!response.ok) {
-        throw new Error("Failed to create journal")
+        if (response.status === 401) {
+          router.push("/sign-in")
+        } else {
+          throw new Error("Failed to create journal")
+        }
       }
 
       const data = await response.json()
@@ -80,11 +84,11 @@ export function CustomExpandingTextarea({
       setMessage("")
       
       // Add a small delay before navigation to allow for transition
-      setTimeout(() => {
+      // setTimeout(() => {
         setIsLoading(false)
         setIsExpanded(false)
         router.push(`/journals/${data.id}`, { scroll: false })
-      }, 1000)
+      // }, 1000)
 
     } catch (error) {
       console.error("Error sending message:", error)

@@ -38,20 +38,20 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (!userId || !user) {
       try {
         console.log("userId", userId);
-        const db = await createSqliteConnection();
-        await insertLocalJournal(db, [
-          uuid,
-          new Date(),
-          browserInfo,
-          JSON.stringify(sentiments),
-          content
-        ]);
+        // const db = await createSqliteConnection();
+        // await insertLocalJournal(db, [
+        //   uuid,
+        //   new Date(),
+        //   browserInfo,
+        //   JSON.stringify(sentiments),
+        //   content
+        // ]);
 
         return NextResponse.json({
-          success: true,
+          success: false,
           id: uuid,
-          message: "Journal saved locally"
-        }, { status: 201 });
+          message: "Need to be logged in to save journal"
+        }, { status: 401 });
       } catch (dbError) {
         console.error('Local database error:', dbError);
         return NextResponse.json({

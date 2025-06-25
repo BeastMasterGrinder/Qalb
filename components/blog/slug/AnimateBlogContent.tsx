@@ -1,3 +1,5 @@
+"use client"
+
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import * as motion from "motion/react-client";

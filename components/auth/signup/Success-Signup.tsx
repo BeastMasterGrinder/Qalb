@@ -1,3 +1,5 @@
+"use client"
+
 import * as motion from "motion/react-client";
 import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";

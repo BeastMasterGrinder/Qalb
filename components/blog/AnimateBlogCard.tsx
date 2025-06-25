@@ -1,3 +1,5 @@
+"use client"
+
 import * as motion from "motion/react-client";
 import { Blog } from "@/types/blogs";
 import { cardVariants } from "./variants";

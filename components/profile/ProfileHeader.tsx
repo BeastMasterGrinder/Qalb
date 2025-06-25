@@ -158,7 +158,7 @@ export default function ProfileHeader({ initialUsername, avatarUrl, user_id }: P
                     )}
                 </div>
                 <p className="text-sm text-muted-foreground">
-                    Your profile picture is managed through your login provider
+                    images supported are: .jpeg
                 </p>
             </div>
         </div>

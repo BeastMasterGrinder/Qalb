@@ -4,7 +4,7 @@ import { CaseLower, User } from "lucide-react";
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { Pencil } from 'lucide-react';
-import { getPFPUrl } from "@/lib/actions/buckets";
+import { getPFPUrl, updatePFPUrlProfiles } from "@/lib/actions/buckets";
 
 interface ProfileAvatar {
     avatarUrl: string,
@@ -20,9 +20,9 @@ export default function ProfileAvatar( data: ProfileAvatar){
         const fetchAvatarUrl = async () => {
 
             const url = await getPFPUrl();
-            if (typeof url === 'string') {
+            if (typeof url === 'string' && url !== "") {
                 setAvatarUrl(url);
-            } else {
+            } else if (url instanceof Error) {
                 alert(`Error uploading avatar! ${url}`);
             }
         };
@@ -40,7 +40,10 @@ export default function ProfileAvatar( data: ProfileAvatar){
             const file = event.target.files[0];
             let fileExt = file.name.split('.').pop();
 
-            if (fileExt?.toLowerCase() !== 'jpg'){
+            console.log("fileExt", fileExt)
+            console.log("file", file)
+
+            if (fileExt?.toLowerCase() !== 'jpg' && fileExt?.toLowerCase() !== 'jpeg'){
                 throw new Error("Uploaded an unsupported file. Must be only jpeg")
             }
 
@@ -50,7 +53,7 @@ export default function ProfileAvatar( data: ProfileAvatar){
                 throw new Error('No user found');
             }
 
-            const filePath = `${user.id}.${fileExt}`;
+            const filePath = `${user.id}/${user.id}.${fileExt}`;
             const { error: uploadError } = await supabase.storage
                 .from('avatars')
                 .upload(filePath, file, {    
@@ -58,13 +61,19 @@ export default function ProfileAvatar( data: ProfileAvatar){
                     upsert: true
                 });
 
+            console.log(uploadError)    
             if (uploadError) {
-                throw uploadError;
+                throw uploadError.message;
+            }
+
+            const update = await updatePFPUrlProfiles(filePath);
+            if (update instanceof Error) {
+                throw update;
             }
 
             setAvatarUrl(filePath);
         } catch (error) {
-            alert(`Error uploading avatar! ${error}`);
+            alert(`Error uploading avatar! ${error instanceof Error ? error.message : 'Unknown error'}`);
             console.error(error);
         } finally {
             setUploading(false);

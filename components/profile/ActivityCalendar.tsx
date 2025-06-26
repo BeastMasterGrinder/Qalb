@@ -1,3 +1,5 @@
+'use client'
+
 import moment from 'moment';
 import { motion } from 'framer-motion';
 

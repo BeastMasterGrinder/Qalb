@@ -9,7 +9,7 @@ export default function Home() {
       <BackgroundPaths />
       {/** Verse Randomizer */}
       <div className="flex-[0.7] text-center p-4 sm:p-6 md:p-8 md:px-[8rem] lg:px-[12rem] max-h-[70vh] flex items-center justify-center">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense>
           <Verse />
         </Suspense>
       </div>

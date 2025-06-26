@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { SearchInput } from "@/components/journal/search-input"
 import { TagFilter } from "@/components/journal/tag-filter"
 import { JournalResults } from "@/components/journal/journal-results"
+import JournalsLoader from "@/components/loading/journals"
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -22,7 +23,7 @@ export default async function JournalPage({ searchParams }: PageProps) {
         </div>
 
         {/* Journal Results */}
-        <Suspense fallback={<div>Loading journals...</div>}>
+        <Suspense fallback={<JournalsLoader />}>
           <JournalResults searchParams={await searchParams} />
         </Suspense>
       </div>

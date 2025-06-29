@@ -16,6 +16,7 @@ import { SuspenseTransitionProvider } from "@/components/transitions/transition-
 // Ping the microservice when the server starts
 pingMicroservice();
 
+
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";

@@ -158,7 +158,7 @@ export default function ProfileHeader({ initialUsername, avatarUrl, user_id }: P
                     )}
                 </div>
                 <p className="text-sm text-muted-foreground">
-                    images supported are: .jpeg
+                    images supported are: .jpeg and must be less than 2MB
                 </p>
             </div>
         </div>

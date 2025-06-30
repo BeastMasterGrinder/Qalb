@@ -5,16 +5,16 @@ import { LoadingBlogLists } from "./loading";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blogs",
   description: "Explore our collection of Islamic articles, Quranic insights, and spiritual guidance. Discover wisdom and knowledge through our carefully curated blog posts.",
   openGraph: {
-    title: "Blog | Qalb",
+    title: "Blogs | Qalb",
     description: "Explore our collection of Islamic articles, Quranic insights, and spiritual guidance. Discover wisdom and knowledge through our carefully curated blog posts.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog | Qalb",
+    title: "Blogs | Qalb",
     description: "Explore our collection of Islamic articles, Quranic insights, and spiritual guidance. Discover wisdom and knowledge through our carefully curated blog posts.",
   },
   alternates: {

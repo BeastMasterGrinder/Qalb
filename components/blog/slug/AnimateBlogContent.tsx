@@ -6,7 +6,7 @@ import * as motion from "motion/react-client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import getBlogData from "@/lib/blog/getBlogData";
-import { fadeInUp, staggerContainer } from "@/app/(bread-cumbs)/blog/[slug]/variants";
+import { fadeInUp, staggerContainer } from "@/app/blog/[slug]/variants";
 
 
 

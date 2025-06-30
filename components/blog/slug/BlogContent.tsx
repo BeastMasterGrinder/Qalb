@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
+import MarkDownToHTML from "./MarkDownToHTML";
 
 
 export default function BlogContent({ blog }: { blog: Blog }) {
@@ -56,7 +57,9 @@ export default function BlogContent({ blog }: { blog: Blog }) {
         >
           {/* This is where the MDX content would be rendered */}
           {/* For now, we'll just display the raw content */}
-          <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+          <div className="text-lg markdown">
+            <MarkDownToHTML markdown={blog.content} />
+          </div>
         </motion.div>
       </div>
     </motion.article>

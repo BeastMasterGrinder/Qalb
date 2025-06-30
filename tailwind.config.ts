@@ -25,6 +25,7 @@ const config = {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			verse: 'hsl(var(--verse))',
+  			'blog-text': 'hsl(var(--blog-text))',
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'

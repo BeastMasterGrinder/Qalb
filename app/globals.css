@@ -23,6 +23,7 @@
     --chart-4: 35 30% 60%;           /* Warm taupe */
     --chart-5: 20 30% 50%;           /* Deep umber */
     --verse: 85 20% 35%;         /* Olive green */
+    --blog-text: 0 0% 14%;
   }
 
   .dark {
@@ -45,6 +46,7 @@
     --chart-4: 240 15% 40%;          /* Blue-gray */
     --chart-5: 20 25% 55%;           /* Warm gray-brown */
     --verse: 170 25% 65%;        /* Soft teal */
+    --blog-text: 0 2% 78%;
   }
 }
 
@@ -54,6 +56,31 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .markdown h1 {
+    @apply text-2xl font-bold mb-6 break-normal;
+  }
+
+  .markdown h2 {
+    @apply text-3xl font-semibold mb-4;
+  }
+
+  .markdown h3 {
+    @apply text-2xl font-medium mb-3;
+  }
+
+  .markdown p {
+    @apply mb-4 text-lg break-normal text-blog-text;
+    font-weight: 400;
+    letter-spacing: -0.003em;
+    line-height: 32px;
+  }
+
+  .markdown ul {
+    @apply list-disc list-inside mb-4;
   }
 }
 

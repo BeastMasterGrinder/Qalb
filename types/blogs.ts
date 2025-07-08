@@ -1,9 +1,9 @@
-export interface Blog {
+export type Blog = {
     id: string;
     title: string;
     content: string;
     excerpt?: string;
-    slug: string;
-    created_at: string;
     author?: string;
-  }
+    created_at: string;
+    coverImage?: string;
+};

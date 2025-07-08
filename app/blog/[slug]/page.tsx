@@ -13,6 +13,9 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const blog = await getBlogData((await props.params).slug);
+  const defaultUrl = process.env.NEXT_PUBLIC_APP_URL
+    ? `https://www.${process.env.NEXT_PUBLIC_APP_URL}`
+    : "http://localhost:3000";
   
   if (!blog) {
     return {
@@ -34,12 +37,25 @@ export async function generateMetadata(
       type: 'article',
       publishedTime: blog.created_at,
       authors: [blog.author || 'Qalb Team'],
-      images: previousImages,
+      url: `${defaultUrl}/blog/${(await props.params).slug}`,
+      siteName: 'Qalb',
+      locale: 'en_US',
+      images: blog.coverImage ? [
+        {
+          url: blog.coverImage,
+          width: 1200,
+          height: 630,
+          alt: blog.title,
+        },
+        ...previousImages
+      ] : previousImages,
     },
     twitter: {
       card: 'summary_large_image',
       title: blog.title,
       description: blog.excerpt || blog.content.substring(0, 160),
+      creator: '@QalbApp',
+      images: blog.coverImage ? [blog.coverImage] : undefined,
     },
     alternates: {
       canonical: `/blog/${(await props.params).slug}`,

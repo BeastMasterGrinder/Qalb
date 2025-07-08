@@ -47,12 +47,14 @@ export const metadata = {
     siteName: "Qalb",
     locale: "en_US",
     type: "website",
+    // The image will be automatically handled by opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
     title: "قلب | Qalb - Your Spiritual Companion",
     description: "Qalb - Your spiritual companion for Quranic learning and Islamic knowledge and Journaling. Explore beautiful Arabic calligraphy, Quranic verses, and Islamic teachings with our modern, accessible platform.",
     creator: "@QalbApp",
+    // The image will be automatically handled by twitter-image.tsx
   },
   icons: {
     icon: '/favicon.png',
@@ -68,6 +70,9 @@ export const metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  verification: {
+    google: "oOjCMUxu2SiLl9xNx_3SRcS232tAU6EtK7qoeFgg4-M",
   },
 };
 

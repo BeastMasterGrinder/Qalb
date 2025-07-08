@@ -4,6 +4,33 @@ import * as motion from "motion/react-client"
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+    title: 'About Qalb',
+    description: 'Learn more about Qalb and its creator Farjad. Discover the story behind your spiritual companion for Quranic learning and Islamic knowledge.',
+    openGraph: {
+        title: 'About Qalb',
+        description: 'Learn more about Qalb and its creator Farjad. Discover the story behind your spiritual companion for Quranic learning and Islamic knowledge.',
+        type: 'website',
+        url: `https://www.qalbjournal.com/about`,
+        siteName: 'Qalb',
+        images: [
+            {
+                url: 'https://www.qalbjournal.com/images/aboutme.jpg',
+                width: 500,
+                height: 500,
+                alt: 'About Qalb - Farjad',
+            }
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'About Qalb',
+        description: 'Learn more about Qalb and its creator Farjad. Discover the story behind your spiritual companion for Quranic learning and Islamic knowledge.',
+        creator: '@QalbApp',
+        images: ['https://www.qalbjournal.com/images/aboutme.jpg'],
+    },
+};
+
 const lato = Lato({
     weight: ["400", "700"],
     subsets: ["latin"],

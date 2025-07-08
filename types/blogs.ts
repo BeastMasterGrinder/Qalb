@@ -5,5 +5,6 @@ export type Blog = {
     excerpt?: string;
     author?: string;
     created_at: string;
+    slug: string;
     coverImage?: string;
 };

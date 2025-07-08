@@ -1,4 +1,3 @@
-"use client"
 import { Lato } from "next/font/google";
 import * as motion from "motion/react-client"
 import Image from "next/image";

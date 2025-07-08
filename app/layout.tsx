@@ -18,7 +18,7 @@ pingMicroservice();
 
 
 const defaultUrl = process.env.NEXT_PUBLIC_APP_URL
-  ? `https://${process.env.NEXT_PUBLIC_APP_URL}`
+  ? `https://www.${process.env.NEXT_PUBLIC_APP_URL}`
   : "http://localhost:3000";
 
 export const metadata = {

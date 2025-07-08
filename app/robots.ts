@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+    ? `https://www.${process.env.NEXT_PUBLIC_APP_URL}`
     : 'http://localhost:3000'
 
   return {

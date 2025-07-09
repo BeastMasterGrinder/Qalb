@@ -73,11 +73,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                 </a>
             </div>
 
-          {step === "email" && (
-            <ThirdPartyAuth />
-          )}
         </div>
       </form>
+      {step === "email" && (
+        <ThirdPartyAuth />
+      )}
       <TosBar />
     </div>
   )

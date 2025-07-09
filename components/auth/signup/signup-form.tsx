@@ -203,9 +203,9 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
               Sign up
             </Button>
           </div>
-          <ThirdPartyAuth />
         </motion.div>
       </form>
+      <ThirdPartyAuth />
       <TosBar />
     </div>
   )

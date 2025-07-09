@@ -18,7 +18,7 @@ export default async function Image() {
       <div
         style={{
           fontSize: 128,
-          background: 'white',
+          background: '#E4DBCD',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -26,7 +26,7 @@ export default async function Image() {
           justifyContent: 'center',
         }}
       >
-        قلب | Qalb
+        <div style={{ fontSize: 128, color: '#1a1a1a' }}>قلب | Qalb</div>
       </div>
     ),
     {

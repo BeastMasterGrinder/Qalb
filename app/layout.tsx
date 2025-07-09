@@ -18,8 +18,8 @@ pingMicroservice();
 
 
 const defaultUrl = process.env.NEXT_PUBLIC_APP_URL
-  ? `https://www.${process.env.NEXT_PUBLIC_APP_URL}`
-  : "http://localhost:3000";
+  ? `https://${process.env.NEXT_PUBLIC_APP_URL}`
+  : "http://qalbjournal.com";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),

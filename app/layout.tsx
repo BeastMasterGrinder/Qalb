@@ -1,5 +1,6 @@
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { AnimatePresence } from "framer-motion";
@@ -103,13 +104,15 @@ export default function RootLayout({
       ${ramadhanKarim.variable}
       `}>
       <script src="https://accounts.google.com/gsi/client" async></script>
-        
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'GTM-T52BJ494'} />
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T52BJ494"
+        height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         <PostHogProvider>
           <ThemeProvider
             attribute="class"

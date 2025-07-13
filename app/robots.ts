@@ -25,7 +25,6 @@ export default function robots(): MetadataRoute.Robots {
         '/profile/*',
         '/private/*',
         '/*.json$',
-        '/*.xml$'
       ]
     },
     sitemap: `${baseUrl}/sitemap.xml`,

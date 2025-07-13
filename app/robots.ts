@@ -13,7 +13,9 @@ export default function robots(): MetadataRoute.Robots {
         '/blog',
         '/blog/*',
         '/about',
-        '/donate'
+        '/donate',
+        '/sign-in',
+        '/sign-up'
       ],
       disallow: [
         '/api/*',

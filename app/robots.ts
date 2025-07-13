@@ -6,27 +6,23 @@ export default function robots(): MetadataRoute.Robots {
     : 'http://localhost:3000'
 
   return {
-    rules: {
-      userAgent: '*',
-      allow: [
-        '/',
-        '/blog',
-        '/blog/*',
-        '/about',
-        '/donate',
-        '/sign-in',
-        '/sign-up',
-        '/blog/sitemap.xml',
-        '/sitemap.xml'
-      ],
-      disallow: [
-        '/api/*',
-        '/journals/*',
-        '/profile/*',
-        '/private/*',
-        '/*.json$',
-      ]
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: ['/sitemap.xml', '/blog/sitemap.xml'],
+      },
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: [
+          '/api/',
+          '/journals/',
+          '/profile/',
+          '/private/',
+          '/*.json',
+        ]
+      }
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl
   }

@@ -19,7 +19,7 @@ export default async function ProfilePage() {
     // Fetch user info from the user_info table
     const { data: userInfo, error: userInfoError } = await supabase
         .from('profiles')
-        .select('username')
+        .select('username, avatar_url')
         .eq('id', user.id)
         .single();
 
@@ -28,7 +28,7 @@ export default async function ProfilePage() {
     }
 
     const username = userInfo?.username || "";
-    const avatarUrl = await getSignedURLServer(user.user_metadata.avatar_url);
+    const avatarUrl = await getSignedURLServer(userInfo?.avatar_url || "/images/pfp.png");
     const journalsDateResult = await getJournalDates(user.id);
     
     // Check if result is an error object

@@ -13,9 +13,11 @@
 
 import { getJournal } from '@/lib/actions/journal';
 import JournalClientContainer from '@/components/journal/journal-client-container';
-import { getRandomVersesBySentiment } from '@/lib/actions/SentimentVerses';
 import SentimentVerses  from '@/components/journal/sentiments/Sentiment-Verses'
 import ThemeLanterns from '@/components/lanterns/ThemeLanterns';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+
 
 type Params = Promise<{ slug: string }>
 
@@ -43,6 +45,14 @@ const sizing = "flex flex-col items-center justify-center py-5 md:py-16 px-5 md:
 export default async function JournalPage(props: {
     params: Params
 }) {
+    const supabase = await createClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        redirect('/sign-in?next=/journals');
+    }
+
     const params = await props.params;
     const { slug } = params;
     const journalData = await getJournal(slug);

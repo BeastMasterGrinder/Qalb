@@ -104,15 +104,14 @@ export default function RootLayout({
       ${ramadhanKarim.variable}
       `}>
       <script src="https://accounts.google.com/gsi/client" async></script>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'GTM-T52BJ494'} />
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'G-8GTHSX7GYM'} />
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T52BJ494"
-        height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
+        
         <PostHogProvider>
           <ThemeProvider
             attribute="class"

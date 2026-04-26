@@ -104,7 +104,7 @@ export default function RootLayout({
       ${ramadhanKarim.variable}
       `}>
       <script src="https://accounts.google.com/gsi/client" async></script>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || 'G-8GTHSX7GYM'} />
+      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

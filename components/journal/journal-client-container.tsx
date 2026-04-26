@@ -46,7 +46,7 @@ export default function JournalClientContainer({
             exit={{ opacity: 0, y: -20 }}
             transition={{ 
                 duration: 0.8,
-                ease: "easeInOut"
+                ease: "easeInOut" as const
             }}
             className={className}
         >

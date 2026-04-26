@@ -2,11 +2,6 @@ import type { NextConfig } from "next";
 const createMDX = require('@next/mdx')
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  eslint: {
-    dirs: ["app", "components", "lib", "pages", "public", "styles"],
-    ignoreDuringBuilds: true,
-  },
   experimental: {
     mdxRs: true,
   },

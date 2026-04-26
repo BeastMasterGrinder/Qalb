@@ -15,7 +15,7 @@ const lanternVariants = {
         opacity: 1,
         transition: {
             duration: 1,
-            ease: "easeOut",
+            ease: "easeOut" as const,
         }
     },
     exit: {
@@ -29,7 +29,7 @@ const lanternVariants = {
         rotate: [0, 2, -2, 2, -2, 0],
         transition: {
             duration: 4,
-            ease: "easeInOut",
+            ease: "easeInOut" as const,
             repeat: Infinity,
         }
     }
@@ -45,14 +45,14 @@ const glowVariants = {
         scale: 1,
         transition: {
             duration: 1,
-            ease: "easeOut",
+            ease: "easeOut" as const,
         }
     },
     swing: {
         rotate: [0, 2, -2, 2, -2, 0],
         transition: {
             duration: 4,
-            ease: "easeInOut",
+            ease: "easeInOut" as const,
             repeat: Infinity,
         }
     },
@@ -61,7 +61,7 @@ const glowVariants = {
         scale: [0.95, 1.05, 0.95],
         transition: {
             duration: 3,
-            ease: "easeInOut",
+            ease: "easeInOut" as const,
             repeat: Infinity,
         }
     }

@@ -243,7 +243,7 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
                     duration: 3,
                     repeat: Number.POSITIVE_INFINITY,
                     delay: i * 0.5,
-                    ease: "easeInOut",
+                    ease: "easeInOut" as const,
                   }}
                 />
               ))}
@@ -258,7 +258,7 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
               transition={{
                 duration: 2,
                 repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
               }}
             >
               <motion.div
@@ -269,7 +269,7 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
                 transition={{
                   duration: 3,
                   repeat: Number.POSITIVE_INFINITY,
-                  ease: "linear",
+                  ease: "linear" as const,
                 }}
               >
                 {currentState.icon}
@@ -302,7 +302,7 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
                 transition={{
                   duration: 2,
                   repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
+                  ease: "easeInOut" as const,
                 }}
               />
             </div>
@@ -317,7 +317,7 @@ export function ChatLoader({ isVisible, onComplete }: LoadingAnimationProps) {
               transition={{
                 duration: 2,
                 repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
               }}
             />
           </div>

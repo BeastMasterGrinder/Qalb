@@ -31,7 +31,7 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
           exit={{ opacity: 0 }}
           transition={{
             duration: 0.3,
-            ease: "easeInOut",
+            ease: "easeInOut" as const,
           }}
         >
           <div className="relative h-16 w-16">
@@ -45,7 +45,7 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
               }}
             />
             <motion.div
@@ -58,7 +58,7 @@ export function TransitionProvider({ children }: TransitionProviderProps) {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
                 delay: 0.2,
               }}
             />

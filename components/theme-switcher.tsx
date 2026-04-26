@@ -39,7 +39,7 @@ const ThemeSwitcher = () => {
       <div className="w-8 h-8 overflow-hidden flex items-center justify-center">
         <motion.div
           animate={{ y: isDark ? 22 : -22 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
           className="flex flex-col items-center gap-7"
         >
           <Moon size={ICON_SIZE} className="text-muted-foreground" />

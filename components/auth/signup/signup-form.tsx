@@ -145,7 +145,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                     animate={{ y: 0, opacity: 1 }} 
                     transition={{
                         duration: 0.4,
-                        ease: "easeIn"
+                        ease: "easeIn" as const
                     }}
                 >
                     <FieldBox
@@ -163,7 +163,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                     animate={{ y: 0, opacity: 1 }} 
                     transition={{
                         duration: 0.4,
-                        ease: "easeIn"
+                        ease: "easeIn" as const
                     }}
                 >
                     <FieldBox
@@ -185,7 +185,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                     animate={{ y: 0, opacity: 1 }} 
                     transition={{
                         duration: 0.4,
-                        ease: "easeIn"
+                        ease: "easeIn" as const
                     }}
                     className="grid gap-2"
                   >

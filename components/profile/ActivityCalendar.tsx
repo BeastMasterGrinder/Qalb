@@ -47,7 +47,7 @@ export default function ActivityCalendar({ journals }: ActivityCalendarProps) {
             scale: 1, 
             opacity: 1,
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 stiffness: 300,
                 damping: 20
             }

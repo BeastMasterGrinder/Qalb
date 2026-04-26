@@ -112,7 +112,7 @@ export function CustomExpandingTextarea({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: "easeInOut" as const }}
             onClick={() => setIsExpanded(false)}
           />
         )}
@@ -137,7 +137,7 @@ export function CustomExpandingTextarea({
             opacity: 1,
           }}
           transition={{
-            type: "spring",
+            type: "spring" as const,
             stiffness: 300,
             damping: 30,
             mass: 1,
@@ -152,7 +152,7 @@ export function CustomExpandingTextarea({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{
-                    type: "spring",
+                    type: "spring" as const,
                     stiffness: 300,
                     damping: 30,
                     delay: 0.1
@@ -192,7 +192,7 @@ export function CustomExpandingTextarea({
                 opacity: message.length > 0 ? 1 : 0,
               }}
               transition={{
-                type: "spring",
+                type: "spring" as const,
                 stiffness: 300,
                 damping: 25
               }}

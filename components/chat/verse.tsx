@@ -112,7 +112,7 @@ export default function Verse() {
             exit={{ opacity: 0, y: -20 }}
             transition={{
               duration: 0.5,
-              ease: "easeInOut"
+              ease: "easeInOut" as const
             }}
             className="space-y-8"
           >
@@ -125,7 +125,7 @@ export default function Verse() {
                 transition={{
                   duration: 0.6,
                   delay: 0.1,
-                  ease: "easeOut"
+                  ease: "easeOut" as const
                 }}
               >
                 {truncatedText}
@@ -139,7 +139,7 @@ export default function Verse() {
                 transition={{
                   duration: 0.6,
                   delay: 0.2,
-                  ease: "easeOut"
+                  ease: "easeOut" as const
                 }}
               >
                 {truncatedTranslation}
@@ -164,7 +164,7 @@ export default function Verse() {
               transition={{
                 duration: 0.4,
                 delay: 0.3,
-                ease: "easeOut"
+                ease: "easeOut" as const
               }}
             >
               {verse.key}

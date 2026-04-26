@@ -14,7 +14,7 @@ export function VerseSkeleton() {
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "easeInOut" as const,
           }}
         />
       </div>
@@ -30,7 +30,7 @@ export function VerseSkeleton() {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
                 delay: i * 0.2,
               }}
             />
@@ -42,7 +42,7 @@ export function VerseSkeleton() {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
                 delay: i * 0.2 + 0.1,
               }}
             />
@@ -58,7 +58,7 @@ export function VerseSkeleton() {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
                 delay: i * 0.2,
               }}
             />
@@ -70,7 +70,7 @@ export function VerseSkeleton() {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
                 delay: i * 0.2 + 0.1,
               }}
             />
@@ -85,7 +85,7 @@ export function VerseSkeleton() {
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: "easeInOut" as const,
               delay: i * 0.2 + 0.2,
             }}
           />

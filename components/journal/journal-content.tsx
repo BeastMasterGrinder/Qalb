@@ -18,7 +18,7 @@ export function JournalContent({ sentence, sentiment, direction }: JournalConten
                 opacity: 1,
                 x: 0,
                 transition: {
-                    type: "spring",
+                    type: "spring" as const,
                     damping: 20,
                     stiffness: 300
                 }
